@@ -1,3 +1,6 @@
+// ignore_for_file: use_key_in_widget_constructors
+
+import 'package:cocktailbar_app/checkboxPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/second': (context) => SecondPage(),
         '/third': (context) => ThirdPage(),
+        '/fourth': (context) => CheckBoxPage(),
       },
     );
   }
@@ -26,22 +30,36 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Benvenuto!',
               style: TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/second');
               },
-              child: Text('Vai alla Seconda Pagina'),
+              child: const Text('Vai alla Seconda Pagina'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/third');
+              },
+              child: const Text('Vai alla Terza Pagina'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/fourth');
+              },
+              child: const Text('Vai alla Quarta Pagina'),
             ),
           ],
         ),
@@ -72,13 +90,6 @@ class SecondPage extends StatelessWidget {
               },
               child: Text('Torna alla Home Page'),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/third');
-              },
-              child: Text('Vai alla Terza Pagina'),
-            ),
           ],
         ),
       ),
@@ -107,7 +118,7 @@ class ThirdPage extends StatelessWidget {
                 Navigator.popUntil(context, ModalRoute.withName('/'));
               },
               child: Text('Torna alla Home Page'),
-            ),
+            )
           ],
         ),
       ),
