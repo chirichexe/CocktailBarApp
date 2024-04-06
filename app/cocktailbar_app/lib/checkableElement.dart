@@ -19,6 +19,7 @@ class CheckableElement extends StatefulWidget {
 class _CheckableElementState extends State<CheckableElement> {
   late bool _isChecked;
   late String _elementName;
+
   @override
   void initState() {
     super.initState();
