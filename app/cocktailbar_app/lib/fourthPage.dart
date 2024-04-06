@@ -1,15 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors
-//testosterone
-//succhiamelo
 import 'package:cocktailbar_app/checkableElement.dart';
 import 'package:flutter/material.dart';
 
-class CheckBoxPage extends StatefulWidget {
+class createFourthPage extends StatefulWidget {
   @override
   FourthPage createState() => FourthPage();
 }
 
-class FourthPage extends State<CheckBoxPage> {
+class FourthPage extends State<createFourthPage> {
   bool _isChecked = false;
 
   @override
