@@ -14,7 +14,7 @@ class ThirdPage extends State<createThirdPage> {
       appBar: AppBar(
         title: Text('Terza Pagina'),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -22,13 +22,6 @@ class ThirdPage extends State<createThirdPage> {
               'Questa è la Terza Pagina!',
               style: TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.popUntil(context, ModalRoute.withName('/'));
-              },
-              child: Text('Torna alla Home Page'),
-            )
           ],
         ),
       ),

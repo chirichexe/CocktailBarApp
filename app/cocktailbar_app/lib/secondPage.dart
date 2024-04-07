@@ -23,13 +23,6 @@ class SecondPage extends State<createSecondPage> {
               'Questa è la Seconda Pagina!',
               style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Torna alla Home Page'),
-            ),
           ],
         ),
       ),

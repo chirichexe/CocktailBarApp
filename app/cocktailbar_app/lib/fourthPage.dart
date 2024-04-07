@@ -24,13 +24,6 @@ class FourthPage extends State<createFourthPage> {
               'Il tuo bottone è ${_isChecked ? 'premuto' : 'non premuto'}',
               style: TextStyle(fontSize: _isChecked ? 50 : 20),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.popUntil(context, ModalRoute.withName('/'));
-              },
-              child: const Text('Torna alla Home Page'),
-            ),
             const SizedBox(
               height: 20,
             ),
