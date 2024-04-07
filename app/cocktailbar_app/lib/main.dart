@@ -1,10 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'homePage.dart';
-import 'secondPage.dart';
-import 'thirdPage.dart';
-import 'fourthPage.dart';
+import 'pages/homepage/homePage.dart';
+import 'pages/secondpage/secondPage.dart';
+import 'pages/thirdpage/thirdPage.dart';
+import 'pages/fourthpage/fourthPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,6 +27,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-

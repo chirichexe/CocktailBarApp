@@ -1,5 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors
-import 'package:cocktailbar_app/checkableElement.dart';
+import 'package:cocktailbar_app/pages/fourthpage/elements/checkable_element.dart';
 import 'package:flutter/material.dart';
 
 class createFourthPage extends StatefulWidget {
@@ -14,14 +14,14 @@ class FourthPage extends State<createFourthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Michele che frocetto che sei'),
+        title: const Text('Seleziona gli ingredienti'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Il tuo bottone è ${_isChecked ? 'premuto' : 'non premuto'}',
+              'Scegli gli elementi',
               style: TextStyle(fontSize: _isChecked ? 50 : 20),
             ),
             const SizedBox(
@@ -43,7 +43,7 @@ class FourthPage extends State<createFourthPage> {
             ),
             CheckableElement(
               initialValue: false,
-              elementName: 'Spermatozoi',
+              elementName: 'Test1',
               onChanged: (value) {
                 //Qui dovremo gestire l'accumulo
               },

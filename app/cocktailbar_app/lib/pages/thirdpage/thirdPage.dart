@@ -1,5 +1,4 @@
 // ignore_for_file: use_key_in_widget_constructors
-import 'package:cocktailbar_app/checkableElement.dart';
 import 'package:flutter/material.dart';
 
 class createThirdPage extends StatefulWidget {
@@ -12,7 +11,7 @@ class ThirdPage extends State<createThirdPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terza Pagina'),
+        title: const Text('Terza Pagina'),
       ),
       body: const Center(
         child: Column(
