@@ -1,7 +1,8 @@
 // ignore_for_file: use_key_in_widget_constructors
+import 'package:cocktailbar_app/pages/magazzino/elements/ListaMagazzini.dart';
+import 'package:cocktailbar_app/pages/magazzino/elements/magazzino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
-
 
 class createMagazzinoPage extends StatefulWidget {
   @override
@@ -15,17 +16,17 @@ class MagazzinoPage extends State<createMagazzinoPage> {
       appBar: AppBar(
         title: const Text('Pagina Magazzino'),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Questa è la Pagina del Magazzino!',
-              style: TextStyle(fontSize: 24),
-            ),
-          ],
+      body: Column(children: <Widget>[
+        Expanded(
+          child: ListaMagazzini(
+            elencoMagazzini: [
+              Magazzino(nome: "Gigiuo", descrizione: "Magazzino gin"),
+              Magazzino(nome: "Vodka", descrizione: "Magazzino vodka"),
+              Magazzino(nome: "Garnish", descrizione: "Magazzino garnish"),
+            ],
+          ),
         ),
-      ),
+      ]),
     );
   }
 }
