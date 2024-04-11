@@ -1,24 +1,24 @@
 // ignore_for_file: use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 
-class createSecondPage extends StatefulWidget {
+class createCocktailPage extends StatefulWidget {
   @override
-  SecondPage createState() => SecondPage();
+  CocktailPage createState() => CocktailPage();
 }
 
-class SecondPage extends State<createSecondPage> {
+class CocktailPage extends State<createCocktailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seconda Pagina'),
+        title: const Text('Cocktail'),
       ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Questa è la Seconda Pagina!',
+              'Questa è la Pagina dei Cocktail!',
               style: TextStyle(fontSize: 24),
             ),
           ],

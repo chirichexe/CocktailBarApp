@@ -20,9 +20,8 @@ class _Drawer extends State<MyDrawer> {
           drawerTitle: "Cocktail App Bar",
           pageRoutes: {
             "/": "Home",
-            "/second": "Magazzino",
-            "/third": "Ricette",
-            "/fourth": "ToDoList"
+            "/magazzino": "Magazzino",
+            "/cocktail": "Cocktail"
           },
         ));
   }

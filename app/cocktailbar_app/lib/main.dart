@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'pages/homepage/homePage.dart';
-import 'pages/secondpage/secondPage.dart';
-import 'pages/thirdpage/thirdPage.dart';
-import 'pages/fourthpage/fourthPage.dart';
+import 'pages/magazzino/magazzinoPage.dart';
+import 'pages/cocktail/cocktailPage.dart';
+import 'package:getwidget/getwidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,9 +20,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyDrawer(),
       routes: {
-        '/second': (context) => createSecondPage(),
-        '/third': (context) => createThirdPage(),
-        '/fourth': (context) => createFourthPage(),
+        '/magazzino': (context) => createMagazzinoPage(),
+        '/cocktail': (context) => createCocktailPage(),
       },
     );
   }

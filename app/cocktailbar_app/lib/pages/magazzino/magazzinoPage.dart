@@ -1,24 +1,26 @@
 // ignore_for_file: use_key_in_widget_constructors
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
-class createThirdPage extends StatefulWidget {
+
+class createMagazzinoPage extends StatefulWidget {
   @override
-  ThirdPage createState() => ThirdPage();
+  MagazzinoPage createState() => MagazzinoPage();
 }
 
-class ThirdPage extends State<createThirdPage> {
+class MagazzinoPage extends State<createMagazzinoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Terza Pagina'),
+        title: const Text('Pagina Magazzino'),
       ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Questa è la Terza Pagina!',
+              'Questa è la Pagina del Magazzino!',
               style: TextStyle(fontSize: 24),
             ),
           ],
