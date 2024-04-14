@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'pages/homepage/homePage.dart';
+import 'package:cocktailbar_app/pages/homepage/homePage.dart';
 import 'pages/magazzino/magazzinoPage.dart';
 import 'pages/cocktail/cocktailPage.dart';
 import 'package:getwidget/getwidget.dart';
