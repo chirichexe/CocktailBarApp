@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 
 class MagazzinoElementModal extends StatelessWidget {
   final String nome;
   final String descrizione;
 
   const MagazzinoElementModal(
-      {Key? key, required this.nome, required this.descrizione})
-      : super(key: key);
+      {super.key, required this.nome, required this.descrizione});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class MagazzinoElementModal extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Chiudi'),
+          child: const Text('Chiudi'),
         ),
       ],
     );
