@@ -1,12 +1,12 @@
 // ignore_for_file: use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 
-class createCocktailPage extends StatefulWidget {
+class CocktailPage extends StatefulWidget {
   @override
-  CocktailPage createState() => CocktailPage();
+  State<CocktailPage> createState() => _CocktailState();
 }
 
-class CocktailPage extends State<createCocktailPage> {
+class _CocktailState extends State<CocktailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

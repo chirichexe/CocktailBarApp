@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:cocktailbar_app/pages/homepage/homePage.dart';
 import 'pages/magazzino/magazzinoPage.dart';
 import 'pages/cocktail/cocktailPage.dart';
-import 'package:getwidget/getwidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,8 +19,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyDrawer(),
       routes: {
-        '/magazzino': (context) => createMagazzinoPage(),
-        '/cocktail': (context) => createCocktailPage(),
+        '/magazzino': (context) => MagazzinoPage(),
+        '/cocktail': (context) => CocktailPage(),
       },
     );
   }

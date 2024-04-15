@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class MagazzinoNavigator extends StatefulWidget {
-  int id;
+  final int id;
 
-  MagazzinoNavigator({super.key, required this.id});
+  const MagazzinoNavigator({super.key, required this.id});
 
   @override
   State<MagazzinoNavigator> createState() => _MagazzinoNavigatorState();
@@ -13,39 +13,79 @@ class MagazzinoNavigator extends StatefulWidget {
 
 class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   int _id = 0;
+  final TextEditingController _searchController = TextEditingController();
+  final List<MagazzinoElement> _elementi = [
+    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "Gin"),
+    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "Test"),
+    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "Ok"),
+    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "Okok"),
+    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "pale"),
+    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "dscs"),
+    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "sdvsd"),
+    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "dsvs"),
+    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "sdvsd"),
+    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "sdvsdv"),
+    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "qwrfv"),
+    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "wevsfd"),
+
+    // Aggiungi gli altri elementi dal database qui
+  ];
+  List<MagazzinoElement> _filteredElementi = [];
 
   @override
   void initState() {
     super.initState();
-
     _id = widget.id;
+    _filteredElementi.addAll(_elementi);
+    _searchController.addListener(() {
+      filterElements();
+    });
   }
 
-  void onPressedButton() {}
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void filterElements() {
+    setState(() {
+      _filteredElementi = _elementi
+          .where((element) => element.nome
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
+          .toList();
+    });
+  }
+
+  void onPressedButton() {
+    // Aggiungi qui il codice per l'azione del pulsante
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Magazzino con id: " + _id.toString()),
+        title: Text("Magazzino con id: $_id"),
       ),
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
                 GFIconButton(
-                  padding: EdgeInsets.all(15.0),
-                  icon: Icon(Icons.plus_one),
+                  padding: const EdgeInsets.all(15.0),
+                  icon: const Icon(Icons.plus_one),
                   onPressed: onPressedButton,
                   color: Colors.black,
                 ),
-                const Expanded(
+                Expanded(
                   flex: 2,
                   child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      hintText: 'Cerca...',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -56,19 +96,16 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
           Expanded(
             child: GridView.count(
               crossAxisCount: 5,
-              children: List.generate(
-                growable: true,
-                10, // Replace with your desired number of items
-                (index) {
-                  return Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: MagazzinoElement(
-                          idMagazzino: _id,
-                          idElemento: 2, //Preso dal database
-                          nome: "paoloCiaccia" //Preso dal database
-                          ));
-                },
-              ),
+              children: _filteredElementi.map((element) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: MagazzinoElement(
+                    idMagazzino: element.idMagazzino,
+                    idElemento: element.idElemento,
+                    nome: element.nome,
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ],
