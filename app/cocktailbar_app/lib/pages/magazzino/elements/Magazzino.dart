@@ -6,23 +6,29 @@ import 'package:google_fonts/google_fonts.dart';
 class Magazzino extends StatefulWidget {
   final String nome;
   final String descrizione;
+  final int id;
 
-  const Magazzino({super.key, required this.descrizione, required this.nome});
+  const Magazzino(
+      {super.key,
+      required this.id,
+      required this.descrizione,
+      required this.nome});
 
   @override
   State<Magazzino> createState() => _MagazzinoState();
 }
 
 class _MagazzinoState extends State<Magazzino> {
-  String nome = "";
-  String descrizione = "";
+  String _nome = "";
+  String _descrizione = "";
+  int _id = 0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    nome = widget.nome;
-    descrizione = widget.descrizione;
+    _nome = widget.nome;
+    _descrizione = widget.descrizione;
+    _id = widget.id;
   }
 
   @override
@@ -35,10 +41,10 @@ class _MagazzinoState extends State<Magazzino> {
           backgroundImage: AssetImage('your asset image'),
         ),
         title: Text(
-          nome,
+          _nome,
           style: GoogleFonts.roboto(fontSize: 26, fontWeight: FontWeight.bold),
         ),
-        subTitle: Text(descrizione),
+        subTitle: Text(_descrizione),
       ),
       content: Text("Some quick example text to build on the card"),
       buttonBar: GFButtonBar(
@@ -49,8 +55,7 @@ class _MagazzinoState extends State<Magazzino> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MagazzinoNavigator(
-                        elementName: "Gin", elementsNumber: 5)),
+                    builder: (context) => MagazzinoNavigator(id: _id)),
               );
             },
             text: 'Apri',

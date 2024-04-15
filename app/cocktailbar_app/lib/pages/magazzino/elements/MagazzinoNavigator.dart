@@ -1,37 +1,33 @@
+import 'package:cocktailbar_app/pages/magazzino/elements/MagazzinoElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class MagazzinoNavigator extends StatefulWidget {
-  String elementName;
-  int elementsNumber;
+  int id;
 
-  MagazzinoNavigator(
-      {super.key, required this.elementName, required this.elementsNumber});
+  MagazzinoNavigator({super.key, required this.id});
 
   @override
   State<MagazzinoNavigator> createState() => _MagazzinoNavigatorState();
 }
 
 class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
-  String _elementName = "";
-  int _elementsNumber = 0;
+  int _id = 0;
 
+  @override
   void initState() {
     super.initState();
 
-    _elementName = widget.elementName;
-    _elementsNumber = widget.elementsNumber;
+    _id = widget.id;
   }
 
-  void onPressedButton() {
-    this._elementsNumber = this._elementsNumber + 1;
-  }
+  void onPressedButton() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_elementName),
+        title: Text("Magazzino con id: " + _id.toString()),
       ),
       body: Column(
         children: [
@@ -62,19 +58,15 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
               crossAxisCount: 5,
               children: List.generate(
                 growable: true,
-                _elementsNumber, // Replace with your desired number of items
+                10, // Replace with your desired number of items
                 (index) {
-                  return const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: GFCard(
-                      color: Color.fromARGB(255, 26, 5, 146),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      title: GFListTile(
-                        titleText: 'Questa è una cacca',
-                        color: GFColors.WHITE,
-                      ),
-                    ),
-                  );
+                  return Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: MagazzinoElement(
+                          idMagazzino: _id,
+                          idElemento: 2, //Preso dal database
+                          nome: "paoloCiaccia" //Preso dal database
+                          ));
                 },
               ),
             ),

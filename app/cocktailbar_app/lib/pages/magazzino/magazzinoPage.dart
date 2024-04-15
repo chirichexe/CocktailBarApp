@@ -20,9 +20,10 @@ class MagazzinoPage extends State<createMagazzinoPage> {
         Expanded(
           child: ListaMagazzini(
             elencoMagazzini: [
-              Magazzino(nome: "Gigiuo", descrizione: "Magazzino gin"),
-              Magazzino(nome: "Vodka", descrizione: "Magazzino vodka"),
-              Magazzino(nome: "Garnish", descrizione: "Magazzino garnish"),
+              Magazzino(id: 1, nome: "Gigiuo", descrizione: "Magazzino gin"),
+              Magazzino(id: 2, nome: "Vodka", descrizione: "Magazzino vodka"),
+              Magazzino(
+                  id: 3, nome: "Garnish", descrizione: "Magazzino garnish"),
             ],
           ),
         ),
