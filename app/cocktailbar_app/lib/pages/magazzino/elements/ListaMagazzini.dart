@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'magazzino.dart';
+import 'Magazzino.dart';
 
 class ListaMagazzini extends StatefulWidget {
   final List<Magazzino> elencoMagazzini;

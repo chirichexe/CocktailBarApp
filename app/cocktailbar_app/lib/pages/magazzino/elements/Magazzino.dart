@@ -1,4 +1,4 @@
-import 'package:cocktailbar_app/pages/magazzino/elements/magazzinoNavigator.dart';
+import 'package:cocktailbar_app/pages/magazzino/elements/MagazzinoNavigator.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';

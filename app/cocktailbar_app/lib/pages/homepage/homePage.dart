@@ -21,7 +21,8 @@ class _Drawer extends State<MyDrawer> {
           pageRoutes: {
             "/": "Home",
             "/magazzino": "Magazzino",
-            "/cocktail": "Cocktail"
+            "/cocktail": "Cocktail",
+            "/database": "Macca"
           },
         ));
   }

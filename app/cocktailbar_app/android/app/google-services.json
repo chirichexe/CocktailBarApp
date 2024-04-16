@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "223352120027",
-    "project_id": "cocktailbarapp-9ce4d",
-    "storage_bucket": "cocktailbarapp-9ce4d.appspot.com"
+    "project_number": "850866194355",
+    "project_id": "cocktailbarapp-d2c08",
+    "storage_bucket": "cocktailbarapp-d2c08.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:223352120027:android:a058f576e69937531222fe",
+        "mobilesdk_app_id": "1:850866194355:android:cfb49c8e2e77dd26532dc6",
         "android_client_info": {
           "package_name": "com.proiettichirichella.cocktailbar_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAxGypvIUQfK3nhhmsbBHrkL-FY-_nPVv0"
+          "current_key": "AIzaSyDqO7i2TguN5A5iLALIHo8hDczbs_CGtzk"
         }
       ],
       "services": {

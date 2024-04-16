@@ -1,6 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 import 'package:cocktailbar_app/pages/magazzino/elements/ListaMagazzini.dart';
-import 'package:cocktailbar_app/pages/magazzino/elements/magazzino.dart';
+import 'package:cocktailbar_app/pages/magazzino/elements/Magazzino.dart';
 import 'package:flutter/material.dart';
 
 class MagazzinoPage extends StatefulWidget {
