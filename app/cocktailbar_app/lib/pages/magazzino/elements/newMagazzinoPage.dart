@@ -48,17 +48,6 @@ class _MagazzinoState extends State<newMagazzinoPage> {
               );
             },
           );
-/*
-          return ListView.builder(
-            itemCount: magazzini.length,
-            itemBuilder: (context, index) {
-              return Magazzino(
-                id: magazzini[index]['id'] ?? '',
-                nome: magazzini[index]['name'] ?? '',
-                descrizione: magazzini[index]['description'] ?? '',
-              );
-            },
-          );*/
         },
       ),
     );

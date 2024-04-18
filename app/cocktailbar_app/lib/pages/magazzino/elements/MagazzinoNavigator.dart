@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocktailbar_app/pages/magazzino/elements/MagazzinoElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -14,22 +15,24 @@ class MagazzinoNavigator extends StatefulWidget {
 class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   int _id = 0;
   final TextEditingController _searchController = TextEditingController();
-  final List<MagazzinoElement> _elementi = [
-    // Aggiungi gli altri elementi dal database qui
-  ];
+  final List<MagazzinoElement> _elementi = [];
   List<MagazzinoElement> _filteredElementi = [];
+
+  final FirebaseFirestore db = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
     _id = widget.id;
 
+    loadElementsFromFirebase();
+/*
     for (int i = 0; i < 9; i++) {
       _elementi.add(new MagazzinoElement(
           idMagazzino: _id,
           idElemento: i,
           nome: "Gin${i} del magazzino ${_id}"));
-    }
+    }*/
 
     _filteredElementi.addAll(_elementi);
     _searchController.addListener(() {
@@ -55,6 +58,32 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
 
   void onPressedButton() {
     // Aggiungi qui il codice per l'azione del pulsante
+  }
+
+  void loadElementsFromFirebase() async {
+    // Effettua una query al database per ottenere gli elementi del magazzino
+    QuerySnapshot querySnapshot = await db
+        .collection('MagazzinoElement')
+        .where('idMagazzino', isEqualTo: _id)
+        .get();
+
+    setState(() {
+      _elementi
+          .clear(); // Svuota la lista prima di aggiungere gli elementi dal database
+      querySnapshot.docs.forEach((doc) {
+        // Itera sui documenti ottenuti dalla query
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        // Crea un nuovo oggetto MagazzinoElement utilizzando i dati ottenuti dal database
+        _elementi.add(MagazzinoElement(
+          idMagazzino: data['idMagazzino'],
+          idElemento: data['idElemento'],
+          nome: data['name'],
+        ));
+      });
+
+      // Assicurati di inizializzare anche _filteredElementi
+      _filteredElementi.addAll(_elementi);
+    });
   }
 
   @override
