@@ -28,11 +28,17 @@ class _MagazzinoState extends State<newMagazzinoPage> {
             return CircularProgressIndicator();
           }
 
-          List<Map<String, dynamic>> magazzini = snapshot.data!.docs.map((DocumentSnapshot document) {
+          List<Map<String, dynamic>> magazzini =
+              snapshot.data!.docs.map((DocumentSnapshot document) {
             return document.data() as Map<String, dynamic>;
           }).toList();
 
-          return ListView.builder(
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: magazzini.length,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 12.0,
+            ),
             itemCount: magazzini.length,
             itemBuilder: (context, index) {
               return Magazzino(
@@ -42,6 +48,17 @@ class _MagazzinoState extends State<newMagazzinoPage> {
               );
             },
           );
+/*
+          return ListView.builder(
+            itemCount: magazzini.length,
+            itemBuilder: (context, index) {
+              return Magazzino(
+                id: magazzini[index]['id'] ?? '',
+                nome: magazzini[index]['name'] ?? '',
+                descrizione: magazzini[index]['description'] ?? '',
+              );
+            },
+          );*/
         },
       ),
     );

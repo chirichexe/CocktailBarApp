@@ -15,19 +15,6 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   int _id = 0;
   final TextEditingController _searchController = TextEditingController();
   final List<MagazzinoElement> _elementi = [
-    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "Gin"),
-    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "Test"),
-    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "Ok"),
-    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "Okok"),
-    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "pale"),
-    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "dscs"),
-    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "sdvsd"),
-    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "dsvs"),
-    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "sdvsd"),
-    const MagazzinoElement(idMagazzino: 1, idElemento: 2, nome: "sdvsdv"),
-    const MagazzinoElement(idMagazzino: 2, idElemento: 3, nome: "qwrfv"),
-    const MagazzinoElement(idMagazzino: 3, idElemento: 4, nome: "wevsfd"),
-
     // Aggiungi gli altri elementi dal database qui
   ];
   List<MagazzinoElement> _filteredElementi = [];
@@ -36,6 +23,14 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   void initState() {
     super.initState();
     _id = widget.id;
+
+    for (int i = 0; i < 9; i++) {
+      _elementi.add(new MagazzinoElement(
+          idMagazzino: _id,
+          idElemento: i,
+          nome: "Gin${i} del magazzino ${_id}"));
+    }
+
     _filteredElementi.addAll(_elementi);
     _searchController.addListener(() {
       filterElements();
