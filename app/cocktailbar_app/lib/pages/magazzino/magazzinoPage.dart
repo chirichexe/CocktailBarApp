@@ -21,8 +21,6 @@ class _MagazzinoState extends State<MagazzinoPage> {
             elencoMagazzini: [
               Magazzino(id: 1, nome: "Gin", descrizione: "Magazzino gin"),
               Magazzino(id: 2, nome: "Vodka", descrizione: "Magazzino vodka"),
-              Magazzino(
-                  id: 3, nome: "Garnish", descrizione: "Magazzino garnish"),
             ],
           ),
         ),

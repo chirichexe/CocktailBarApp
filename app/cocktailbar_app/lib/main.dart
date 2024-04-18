@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cocktailbar_app/pages/homepage/homePage.dart';
-import 'pages/magazzino/magazzinoPage.dart';
+import 'pages/magazzino/elements/newMagazzinoPage.dart';
 import 'pages/cocktail/cocktailPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,26 +15,15 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (Firebase.apps.isNotEmpty) {
     runApp(MyApp());
-    print(Firebase.apps);
     FirebaseFirestore db = FirebaseFirestore.instance;
-    final user = <String, dynamic>{
-  "first": "Ada",
-  "last": "Lovelace",
-  "born": 1815
-};
-
-// Add a new document with a generated ID
-    final cocks = await db.collection("cocktails").get();
-    print("noveoknvenoeoneon ${cocks.docs}");
+    final cocktails = await db.collection("cocktails").get();
+    print("noveoknvenoeoneon ${cocktails.docs}");
   } else {
     print('Error: Firebase initialization failed');
   }
 }
 
 class MyApp extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyDrawer(),
       routes: {
-        '/magazzino': (context) => MagazzinoPage(),
+        '/magazzino': (context) => newMagazzinoPage(),
         '/cocktail': (context) => CocktailPage(),
         '/database': (context) => MyFirebase(),
       },
