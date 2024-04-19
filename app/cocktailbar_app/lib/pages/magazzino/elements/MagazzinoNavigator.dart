@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocktailbar_app/pages/magazzino/elements/CreateElementModal.dart';
 import 'package:cocktailbar_app/pages/magazzino/elements/MagazzinoElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -50,7 +51,11 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   }
 
   void onPressedButton() {
-    // Aggiungi qui il codice per l'azione del pulsante
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CreateElementModal(idMag: _id);
+        });
   }
 
   void loadElementsFromFirebase() {
