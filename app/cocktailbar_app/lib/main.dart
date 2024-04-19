@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cocktailbar_app/pages/homepage/homePage.dart';
-import 'pages/magazzino/elements/newMagazzinoPage.dart';
+import 'pages/magazzino/magazzinoPage.dart';
 import 'pages/cocktail/cocktailPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyDrawer(),
       routes: {
-        '/magazzino': (context) => newMagazzinoPage(),
+        '/magazzino': (context) => MagazzinoPage(),
         '/cocktail': (context) => CocktailPage(),
         '/database': (context) => MyFirebase(),
       },
