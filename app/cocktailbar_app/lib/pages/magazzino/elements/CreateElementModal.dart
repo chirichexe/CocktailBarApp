@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 class CreateElementModal extends StatelessWidget {
   final int idMag;
 
-  const CreateElementModal({super.key, required this.idMag});
+  CreateElementModal({super.key, required this.idMag});
 
   void onPressedButton() async {
     try {
       FirebaseFirestore.instance.collection('MagazzinoElement').add({
         'idMagazzino': idMag,
-        'idElemento': 12,
-        'name': "testrobo",
-        'descrizione': "test",
+        'idElemento': 7,
+        'name': controllerNome.text,
+        'descrizione': controllerDescrizione.text,
       });
       print('Dati inseriti con successo nel database Firebase.');
     } catch (error) {
@@ -20,6 +20,9 @@ class CreateElementModal extends StatelessWidget {
           'Errore durante l\'inserimento dei dati nel database Firebase: $error');
     }
   }
+
+  TextEditingController controllerNome = TextEditingController();
+  TextEditingController controllerDescrizione = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,23 +55,25 @@ class CreateElementModal extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-                      const TextField(
-                        decoration: InputDecoration(
+                      TextField(
+                        controller: controllerNome,
+                        decoration: const InputDecoration(
                           labelText: 'Nome elemento',
                           border: OutlineInputBorder(),
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const TextField(
-                        decoration: InputDecoration(
+                      TextField(
+                        controller: controllerDescrizione,
+                        decoration: const InputDecoration(
                           labelText: 'Descizione',
                           border: OutlineInputBorder(),
                         ),
                         //da cambiare
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),

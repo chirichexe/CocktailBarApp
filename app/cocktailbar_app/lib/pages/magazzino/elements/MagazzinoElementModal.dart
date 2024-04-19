@@ -1,11 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MagazzinoElementModal extends StatelessWidget {
   final String nome;
   final String descrizione;
+  final int idMag;
+  final int idEl;
 
   const MagazzinoElementModal(
-      {super.key, required this.nome, required this.descrizione});
+      {super.key,
+      required this.nome,
+      required this.descrizione,
+      required this.idEl,
+      required this.idMag});
+
+  void onPressedDelete() async {
+    try {
+      // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('MagazzinoElement')
+          .where('idMagazzino', isEqualTo: idMag)
+          .where('idElemento', isEqualTo: idEl)
+          .get();
+
+      // Se esiste un documento che corrisponde alle condizioni, elimina il documento
+      if (querySnapshot.docs.isNotEmpty) {
+        await querySnapshot.docs.first.reference.delete();
+        print('Elemento eliminato con successo.');
+      } else {
+        print('Nessun documento corrispondente alle condizioni trovato.');
+      }
+    } catch (error) {
+      print('Errore durante l\'eliminazione dell\'elemento: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +74,8 @@ class MagazzinoElementModal extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
+                      IconButton(
+                          onPressed: onPressedDelete, icon: Icon(Icons.delete))
                     ],
                   ),
                 ),
