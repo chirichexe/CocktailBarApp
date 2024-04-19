@@ -4,12 +4,14 @@ import 'package:getwidget/getwidget.dart';
 
 class MagazzinoElement extends StatelessWidget {
   final String nome;
+  final String descrizione;
   final int idMagazzino;
   final int idElemento;
 
   const MagazzinoElement({
     super.key,
     required this.nome,
+    required this.descrizione,
     required this.idMagazzino,
     required this.idElemento,
   });
@@ -36,7 +38,7 @@ class MagazzinoElement extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return MagazzinoElementModal(nome: nome, descrizione: "descrizione");
+          return MagazzinoElementModal(nome: nome, descrizione: descrizione);
         });
   }
 }

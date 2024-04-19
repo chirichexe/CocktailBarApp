@@ -68,6 +68,7 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             idMagazzino: data['idMagazzino'],
             idElemento: data['idElemento'],
             nome: data['name'],
+            descrizione: data['descrizione'],
           ));
         });
 
@@ -118,6 +119,7 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
                   child: MagazzinoElement(
                     idMagazzino: element.idMagazzino,
                     idElemento: element.idElemento,
+                    descrizione: element.descrizione,
                     nome: element.nome,
                   ),
                 );
