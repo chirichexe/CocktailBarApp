@@ -26,13 +26,6 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
     _id = widget.id;
 
     loadElementsFromFirebase();
-/*
-    for (int i = 0; i < 9; i++) {
-      _elementi.add(new MagazzinoElement(
-          idMagazzino: _id,
-          idElemento: i,
-          nome: "Gin${i} del magazzino ${_id}"));
-    }*/
 
     _filteredElementi.addAll(_elementi);
     _searchController.addListener(() {
@@ -60,29 +53,28 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
     // Aggiungi qui il codice per l'azione del pulsante
   }
 
-  void loadElementsFromFirebase() async {
-    // Effettua una query al database per ottenere gli elementi del magazzino
-    QuerySnapshot querySnapshot = await db
+  void loadElementsFromFirebase() {
+    // Utilizza lo stream per ottenere gli aggiornamenti in tempo reale dal database
+    db
         .collection('MagazzinoElement')
         .where('idMagazzino', isEqualTo: _id)
-        .get();
+        .snapshots()
+        .listen((QuerySnapshot querySnapshot) {
+      setState(() {
+        _elementi.clear();
+        querySnapshot.docs.forEach((doc) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          _elementi.add(MagazzinoElement(
+            idMagazzino: data['idMagazzino'],
+            idElemento: data['idElemento'],
+            nome: data['name'],
+          ));
+        });
 
-    setState(() {
-      _elementi
-          .clear(); // Svuota la lista prima di aggiungere gli elementi dal database
-      querySnapshot.docs.forEach((doc) {
-        // Itera sui documenti ottenuti dalla query
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        // Crea un nuovo oggetto MagazzinoElement utilizzando i dati ottenuti dal database
-        _elementi.add(MagazzinoElement(
-          idMagazzino: data['idMagazzino'],
-          idElemento: data['idElemento'],
-          nome: data['name'],
-        ));
+        // Assicurati di inizializzare anche _filteredElementi
+        _filteredElementi.clear();
+        _filteredElementi.addAll(_elementi);
       });
-
-      // Assicurati di inizializzare anche _filteredElementi
-      _filteredElementi.addAll(_elementi);
     });
   }
 

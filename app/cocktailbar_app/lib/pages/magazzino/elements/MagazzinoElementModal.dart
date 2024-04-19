@@ -9,17 +9,61 @@ class MagazzinoElementModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(nome),
-      content: Text(descrizione),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Chiudi'),
+    return Dialog(
+      // Impostare la larghezza desiderata
+      child: Container(
+        width: MediaQuery.of(context).size.width *
+            0.7, // 70% della larghezza dello schermo
+        height: MediaQuery.of(context).size.height *
+            0.5, // Altezza fissa o percentuale
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  child: Image.asset('assets/image.png'), // Immagine
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nome,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        descrizione,
+                        //da cambiare
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
+            Align(
+              alignment: Alignment.bottomRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Chiudi'),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
