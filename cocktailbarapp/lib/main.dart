@@ -1,6 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors
-
-import 'package:cocktailbarapp/pages/firebase/firebasePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -15,8 +12,6 @@ void main() async {
   if (Firebase.apps.isNotEmpty) {
     runApp(MyApp());
     FirebaseFirestore db = FirebaseFirestore.instance;
-    final cocktails = await db.collection("cocktails").get();
-    print("noveoknvenoeoneon ${cocktails.docs}");
   } else {
     print('Error: Firebase initialization failed');
   }
@@ -36,7 +31,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/magazzino': (context) => MagazzinoPage(),
         '/cocktail': (context) => CocktailPage(),
-        '/database': (context) => MyFirebase(),
       },
     );
   }

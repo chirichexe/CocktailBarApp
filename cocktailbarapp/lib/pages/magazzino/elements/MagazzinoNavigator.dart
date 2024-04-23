@@ -59,17 +59,18 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   }
 
   void loadElementsFromFirebase() {
-    db
-        .collection('Magazzini')
-        .doc(idMagazzino)
-        .collection('Elements')
-        .snapshots()
-        .listen((QuerySnapshot elementiSnapshot) {
+  // Ottieni la sottocollezione di elementi del magazzino
+  db
+    .collection('Magazzini')
+    .doc(idMagazzino)
+    .collection('Elements')
+    .get()
+    .then((elementiSnapshot) {
       setState(() {
         _elementi.clear();
+        _filteredElementi.clear();
         for (var elementoDoc in elementiSnapshot.docs) {
-          Map<String, dynamic> data =
-              elementoDoc.data() as Map<String, dynamic>;
+          Map<String, dynamic> data = elementoDoc.data();
           _elementi.add(MagazzinoElement(
             idMagazzino: idMagazzino,
             idElemento: elementoDoc.id, // ID dell'elemento
@@ -77,18 +78,20 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             descrizione: data['description'],
           ));
         }
-        // Aggiungi gli elementi filtrati
-        filterElements();
+        _filteredElementi.addAll(_elementi);
       });
+    })
+    .catchError((error) {
+      print("Errore durante il caricamento degli elementi: $error");
     });
-  }
+}
+
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Magazzino con id: $idMagazzino"),
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           Container(

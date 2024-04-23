@@ -22,7 +22,6 @@ class _Drawer extends State<MyDrawer> {
             "/": "Home",
             "/magazzino": "Magazzino",
             "/cocktail": "Cocktail",
-            "/database": "Macca"
           },
         ));
   }

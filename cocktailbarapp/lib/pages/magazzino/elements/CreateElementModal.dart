@@ -1,26 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+
 // ignore: must_be_immutable
 class CreateElementModal extends StatelessWidget {
   final String idMag;
 
   CreateElementModal({super.key, required this.idMag});
-
-  void onPressedButton() async {
-    try {
-      FirebaseFirestore.instance.collection('MagazzinoElement').add({
-        'idMagazzino': idMag,
-        'idElemento': 7,
-        'name': controllerNome.text,
-        'descrizione': controllerDescrizione.text,
-      });
-      print('Dati inseriti con successo nel database Firebase.');
-    } catch (error) {
-      print(
-          'Errore durante l\'inserimento dei dati nel database Firebase: $error');
-    }
-  }
 
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerDescrizione = TextEditingController();
@@ -79,7 +65,23 @@ class CreateElementModal extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton(
-                          onPressed: onPressedButton,
+                          onPressed: () {
+                            try {
+                              FirebaseFirestore.instance.collection('Magazzini')
+                              .doc(idMag)
+                              .collection('Elements')
+                              .add(
+                                {
+                                'name': controllerNome.text,
+                                'description': controllerDescrizione.text,
+                                });
+                              print('Dati inseriti con successo nel database Firebase.');
+                            } catch (error) {
+                              print(
+                              'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                            }
+                            Navigator.of(context).pop();
+                          },
                           child: const Text('Aggiungi'))
                     ],
                   ),
@@ -102,3 +104,22 @@ class CreateElementModal extends StatelessWidget {
     );
   }
 }
+
+
+/*
+  void onPressedButton() async {
+    try {
+      FirebaseFirestore.instance.collection('MagazzinoElement').add({
+        'idMagazzino': idMag,
+        'idElemento': 7,
+        'name': controllerNome.text,
+        'descrizione': controllerDescrizione.text,
+      });
+      print('Dati inseriti con successo nel database Firebase.');
+    } catch (error) {
+      print(
+          'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+    }
+    Navigator.of(context).pop();
+  }
+  */

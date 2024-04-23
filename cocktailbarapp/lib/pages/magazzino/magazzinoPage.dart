@@ -40,7 +40,8 @@ class _MagazzinoState extends State<MagazzinoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Expanded(
+      child: Scaffold(
       appBar: AppBar(
         title: const Text('Pagina Magazzino'),
       ),
@@ -49,6 +50,6 @@ class _MagazzinoState extends State<MagazzinoPage> {
           child: ListaMagazzini(elencoMagazzini: _elementi),
         ),
       ]),
-    );
+    ));
   }
 }

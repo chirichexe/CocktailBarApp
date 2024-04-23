@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
 class MagazzinoElementModal extends StatelessWidget {
   final String nome;
@@ -13,26 +14,6 @@ class MagazzinoElementModal extends StatelessWidget {
       required this.descrizione,
       required this.idEl,
       required this.idMag});
-
-  void onPressedDelete() async {
-    try {
-      // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('MagazzinoElement')
-          .where('idMagazzino', isEqualTo: idMag)
-          .get();
-
-      // Se esiste un documento che corrisponde alle condizioni, elimina il documento
-      if (querySnapshot.docs.isNotEmpty) {
-        await querySnapshot.docs.first.reference.delete();
-        print('Elemento eliminato con successo.');
-      } else {
-        print('Nessun documento corrispondente alle condizioni trovato.');
-      }
-    } catch (error) {
-      print('Errore durante l\'eliminazione dell\'elemento: $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +54,7 @@ class MagazzinoElementModal extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      IconButton(
-                          onPressed: onPressedDelete, icon: Icon(Icons.delete))
+                      DeleteMagazzinoElementButton(idMagazzino: idMag),
                     ],
                   ),
                 ),
@@ -93,6 +73,48 @@ class MagazzinoElementModal extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class DeleteMagazzinoElementButton extends StatefulWidget {
+  final String idMagazzino;
+  const DeleteMagazzinoElementButton({super.key, required this.idMagazzino});
+
+  @override
+  State<DeleteMagazzinoElementButton> createState() => _DeleteMagazzinoElementButtonState();
+}
+
+class _DeleteMagazzinoElementButtonState extends State<DeleteMagazzinoElementButton> {
+
+  @override
+  Widget build(BuildContext context) {
+    return GFButton(
+      onPressed: () async {
+        try {
+      // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Magazzini')
+          .doc(widget.idMagazzino)
+          .collection('Elements')
+          .get();
+
+      // Se esiste un documento che corrisponde alle condizioni, elimina il documento
+        if (querySnapshot.docs.isNotEmpty) {
+          await querySnapshot.docs.first.reference.delete();
+          print('Elemento eliminato con successo.');
+        } else {
+          print('Nessun documento corrispondente alle condizioni trovato.');
+        }
+        } catch (error) {
+          print('Errore durante l\'eliminazione dell\'elemento: $error');
+        }
+        Navigator.of(context).pop();
+      },
+      color: Colors.purple,
+      text: 'Cancella Elemento',
+      textColor: Colors.white,
     );
   }
 }
