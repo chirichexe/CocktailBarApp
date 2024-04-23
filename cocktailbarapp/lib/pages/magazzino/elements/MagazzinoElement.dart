@@ -5,8 +5,8 @@ import 'package:getwidget/getwidget.dart';
 class MagazzinoElement extends StatelessWidget {
   final String nome;
   final String descrizione;
-  final int idMagazzino;
-  final int idElemento;
+  final String idMagazzino;
+  final String idElemento;
 
   const MagazzinoElement({
     super.key,

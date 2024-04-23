@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class Magazzino extends StatefulWidget {
   final String nome;
   final String descrizione;
-  final int id;
+  final String id;
 
   const Magazzino({
     super.key,

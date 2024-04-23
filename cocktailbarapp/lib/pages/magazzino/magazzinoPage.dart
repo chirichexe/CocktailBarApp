@@ -29,7 +29,7 @@ class _MagazzinoState extends State<MagazzinoPage> {
         querySnapshot.docs.forEach((doc) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           _elementi.add(Magazzino(
-            id: data['id'],
+            id: doc.id,
             nome: data['name'],
             descrizione: data['description'],
           ));

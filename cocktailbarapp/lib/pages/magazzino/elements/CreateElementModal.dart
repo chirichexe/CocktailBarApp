@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CreateElementModal extends StatelessWidget {
-  final int idMag;
+  final String idMag;
 
   CreateElementModal({super.key, required this.idMag});
 

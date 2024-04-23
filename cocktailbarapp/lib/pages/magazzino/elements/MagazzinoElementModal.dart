@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class MagazzinoElementModal extends StatelessWidget {
   final String nome;
   final String descrizione;
-  final int idMag;
-  final int idEl;
+  final String idMag;
+  final String idEl;
 
   const MagazzinoElementModal(
       {super.key,
@@ -20,7 +20,6 @@ class MagazzinoElementModal extends StatelessWidget {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('MagazzinoElement')
           .where('idMagazzino', isEqualTo: idMag)
-          .where('idElemento', isEqualTo: idEl)
           .get();
 
       // Se esiste un documento che corrisponde alle condizioni, elimina il documento
