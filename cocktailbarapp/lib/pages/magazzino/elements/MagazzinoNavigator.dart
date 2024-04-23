@@ -59,42 +59,36 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   }
 
   void loadElementsFromFirebase() {
-    // Utilizza lo stream per ottenere gli aggiornamenti in tempo reale dal database
-    db.collection('Magazzini').doc(idMagazzino).get().then((magazzinoDoc) {
-      if (magazzinoDoc.exists) {
-        // Se il documento del magazzino esiste, ottieni la sottocollezione di elementi
-        db
-            .collection('Magazzini')
-            .doc(idMagazzino)
-            .collection('Elements')
-            .get()
-            .then((elementiSnapshot) {
-          setState(() {
-            _elementi.clear();
-            elementiSnapshot.docs.forEach((elementoDoc) {
-              Map<String, dynamic> data =
-                  elementoDoc.data() as Map<String, dynamic>;
-              _elementi.add(MagazzinoElement(
-                idMagazzino: idMagazzino,
-                idElemento: elementoDoc.id, // ID dell'elemento
-                nome: data['name'],
-                descrizione: data['description'],
-              ));
-            });
-          });
-        });
-      }
+    db
+        .collection('Magazzini')
+        .doc(idMagazzino)
+        .collection('Elements')
+        .snapshots()
+        .listen((QuerySnapshot querySnapshot) {
+      setState(() {
+        _elementi.clear();
+        for (var elementoDoc in querySnapshot.docs) {
+          Map<String, dynamic> data =
+              elementoDoc.data() as Map<String, dynamic>;
+          _elementi.add(MagazzinoElement(
+            idMagazzino: idMagazzino,
+            idElemento: elementoDoc.id, // ID dell'elemento
+            nome: data['name'],
+            descrizione: data['description'],
+          ));
+        }
+      });
     });
-  }
 
-  //_filteredElementi.clear();
-  //_filteredElementi.addAll(_elementi);
+    _filteredElementi.clear();
+    _filteredElementi.addAll(_elementi);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Magazzino con id:"),
+        title: Text("Magazzino con id: $idMagazzino"),
       ),
       body: Column(
         children: [
