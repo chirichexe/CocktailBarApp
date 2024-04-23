@@ -64,10 +64,10 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
         .doc(idMagazzino)
         .collection('Elements')
         .snapshots()
-        .listen((QuerySnapshot querySnapshot) {
+        .listen((QuerySnapshot elementiSnapshot) {
       setState(() {
         _elementi.clear();
-        for (var elementoDoc in querySnapshot.docs) {
+        for (var elementoDoc in elementiSnapshot.docs) {
           Map<String, dynamic> data =
               elementoDoc.data() as Map<String, dynamic>;
           _elementi.add(MagazzinoElement(
@@ -77,11 +77,10 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             descrizione: data['description'],
           ));
         }
+        // Aggiungi gli elementi filtrati
+        filterElements();
       });
     });
-
-    _filteredElementi.clear();
-    _filteredElementi.addAll(_elementi);
   }
 
   @override
