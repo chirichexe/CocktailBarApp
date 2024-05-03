@@ -1,0 +1,1 @@
+ /home/michi/Documents/CocktailBarApp/app/cocktailbar_app/.dart_tool/flutter_build/1c671267cbada0c1b4972237004074da/native_assets.yaml: 

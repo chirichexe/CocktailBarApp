@@ -64,8 +64,8 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
     .collection('Magazzini')
     .doc(idMagazzino)
     .collection('Elements')
-    .get()
-    .then((elementiSnapshot) {
+    .snapshots()
+    .listen((elementiSnapshot) {
       setState(() {
         _elementi.clear();
         _filteredElementi.clear();
@@ -80,9 +80,6 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
         }
         _filteredElementi.addAll(_elementi);
       });
-    })
-    .catchError((error) {
-      print("Errore durante il caricamento degli elementi: $error");
     });
 }
 

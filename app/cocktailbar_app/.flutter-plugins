@@ -1,0 +1,12 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/home/michi/.pub-cache/hosted/pub.dev/cloud_firestore-4.17.0/
+cloud_firestore_web=/home/michi/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.12.0/
+firebase_core=/home/michi/.pub-cache/hosted/pub.dev/firebase_core-2.30.0/
+firebase_core_web=/home/michi/.pub-cache/hosted/pub.dev/firebase_core_web-2.15.0/
+firebase_database=/home/michi/.pub-cache/hosted/pub.dev/firebase_database-10.5.2/
+firebase_database_web=/home/michi/.pub-cache/hosted/pub.dev/firebase_database_web-0.2.5+2/
+path_provider=/home/michi/.pub-cache/hosted/pub.dev/path_provider-2.1.3/
+path_provider_android=/home/michi/.pub-cache/hosted/pub.dev/path_provider_android-2.2.4/
+path_provider_foundation=/home/michi/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/
+path_provider_linux=/home/michi/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+path_provider_windows=/home/michi/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1/
