@@ -54,7 +54,7 @@ class MagazzinoElementModal extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      DeleteMagazzinoElementButton(idMagazzino: idMag),
+                      DeleteMagazzinoElementButton(idMagazzino: idMag, idElemento: idEl),
                     ],
                   ),
                 ),
@@ -80,7 +80,8 @@ class MagazzinoElementModal extends StatelessWidget {
 
 class DeleteMagazzinoElementButton extends StatefulWidget {
   final String idMagazzino;
-  const DeleteMagazzinoElementButton({super.key, required this.idMagazzino});
+  final String idElemento;
+  const DeleteMagazzinoElementButton({super.key, required this.idMagazzino, required this.idElemento});
 
   @override
   State<DeleteMagazzinoElementButton> createState() => _DeleteMagazzinoElementButtonState();
@@ -94,19 +95,14 @@ class _DeleteMagazzinoElementButtonState extends State<DeleteMagazzinoElementBut
       onPressed: () async {
         try {
       // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
-          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          await FirebaseFirestore.instance
           .collection('Magazzini')
           .doc(widget.idMagazzino)
           .collection('Elements')
-          .get();
+          .doc(widget.idElemento)
+          .delete();
 
       // Se esiste un documento che corrisponde alle condizioni, elimina il documento
-        if (querySnapshot.docs.isNotEmpty) {
-          await querySnapshot.docs.first.reference.delete();
-          print('Elemento eliminato con successo.');
-        } else {
-          print('Nessun documento corrispondente alle condizioni trovato.');
-        }
         } catch (error) {
           print('Errore durante l\'eliminazione dell\'elemento: $error');
         }
