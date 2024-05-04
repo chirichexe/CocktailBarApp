@@ -53,29 +53,37 @@ class _CocktailPageState extends State<CocktailPage> {
           return CreateCocktailModal();
         });
   }
-
+final List<String> prova= <String>["prova", "prova2"];
   void loadElementsFromFirebase() {
   // Ottieni la sottocollezione di elementi del magazzino
   db
-    .collection('Cocktails')
-    .snapshots()
-    .listen((elementiSnapshot) {
-      setState(() {
-        _elementi.clear();
-        _filteredElementi.clear();
-        for (var elementoDoc in elementiSnapshot.docs) {
-          Map<String, dynamic> data = elementoDoc.data();
-          _elementi.add(CocktailElement(
-            idElemento: elementoDoc.id, // ID dell'elemento
-            nome: data['name'],
-            descrizione: data['description'],
-          ));
-        }
-        _filteredElementi.addAll(_elementi);
-      });
+  .collection('Cocktails')
+  .snapshots()
+  .listen((elementiSnapshot) {
+    setState(() {
+      _elementi.clear();
+      _filteredElementi.clear();
+      for (var elementoDoc in elementiSnapshot.docs) {
+        Map<String, dynamic> data = elementoDoc.data();
+        
+        // Effettua il casting esplicito degli ingredienti a List<String>
+        List<String> ingredienti = List<String>.from(data['ingredients']);
+        
+        _elementi.add(CocktailElement(
+          idElemento: elementoDoc.id, // ID dell'elemento
+          nome: data['name'],
+          descrizione: data['description'],
+          ingredienti: ingredienti, // Usa la lista di stringhe castata
+        ));
+      }
+      _filteredElementi.addAll(_elementi);
     });
-}
+  });
 
+
+
+}
+//List.from(data['ingredients'])
   
 
   @override
@@ -117,6 +125,7 @@ class _CocktailPageState extends State<CocktailPage> {
                     idElemento: element.idElemento,
                     descrizione: element.descrizione,
                     nome: element.nome,
+                    ingredienti: element.ingredienti
                   ),
                 );
               }).toList(),

@@ -6,12 +6,14 @@ class CocktailElementModal extends StatelessWidget {
   final String nome;
   final String descrizione;
   final String idEl;
+  final List<String> ingredienti;
 
   const CocktailElementModal(
       {super.key,
       required this.nome,
       required this.descrizione,
-      required this.idEl});
+      required this.idEl,
+      required this.ingredienti});
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +48,27 @@ class CocktailElementModal extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "descrizione",
+                        descrizione,
                         //da cambiare
                         style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
+                      Text(   //sistemare da qui: non devono esserci due Text, ma un elemento ListView con figli Text
+                        ingredienti.first,
+                        //da cambiare
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        ingredienti.elementAt(1),
+                        //da cambiare
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      //oggetto per mostrare ingredienti
                       DeleteCocktailElementButton(idElemento: idEl),
                     ],
                   ),
