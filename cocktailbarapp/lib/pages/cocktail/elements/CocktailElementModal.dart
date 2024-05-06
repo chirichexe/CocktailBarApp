@@ -54,7 +54,8 @@ class CocktailElementModal extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      Text(   //sistemare da qui: non devono esserci due Text, ma un elemento ListView con figli Text
+                      Text(
+                        //sistemare da qui: non devono esserci due Text, ma un elemento ListView con figli Text
                         ingredienti.first,
                         //da cambiare
                         style: const TextStyle(
@@ -92,29 +93,29 @@ class CocktailElementModal extends StatelessWidget {
   }
 }
 
-
 class DeleteCocktailElementButton extends StatefulWidget {
   final String idElemento;
   const DeleteCocktailElementButton({super.key, required this.idElemento});
 
   @override
-  State<DeleteCocktailElementButton> createState() => _DeleteCocktailElementButtonState();
+  State<DeleteCocktailElementButton> createState() =>
+      _DeleteCocktailElementButtonState();
 }
 
-class _DeleteCocktailElementButtonState extends State<DeleteCocktailElementButton> {
-
+class _DeleteCocktailElementButtonState
+    extends State<DeleteCocktailElementButton> {
   @override
   Widget build(BuildContext context) {
     return GFButton(
       onPressed: () async {
         try {
-      // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
+          // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
           await FirebaseFirestore.instance
-          .collection('Cocktails')
-          .doc(widget.idElemento)
-          .delete();
+              .collection('Cocktails')
+              .doc(widget.idElemento)
+              .delete();
 
-      // Se esiste un documento che corrisponde alle condizioni, elimina il documento
+          // Se esiste un documento che corrisponde alle condizioni, elimina il documento
         } catch (error) {
           print('Errore durante l\'eliminazione dell\'elemento: $error');
         }

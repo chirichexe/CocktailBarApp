@@ -1,4 +1,4 @@
-import 'package:cocktailbarapp/pages/cocktail/CocktailElementModal.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/CocktailElementModal.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -8,21 +8,18 @@ class CocktailElement extends StatefulWidget {
   final String idElemento;
   final List<String> ingredienti;
 
-  const CocktailElement({
-    super.key,
-    required this.nome,
-    required this.descrizione,
-    required this.idElemento,
-    required this.ingredienti
-  });
-
+  const CocktailElement(
+      {super.key,
+      required this.nome,
+      required this.descrizione,
+      required this.idElemento,
+      required this.ingredienti});
 
   @override
   State<CocktailElement> createState() => _CocktailElementState();
 }
 
 class _CocktailElementState extends State<CocktailElement> {
-  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

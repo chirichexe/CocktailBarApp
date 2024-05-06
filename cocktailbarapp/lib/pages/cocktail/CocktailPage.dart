@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocktailbarapp/pages/cocktail/CreateCocktailModal.dart';
-import 'package:cocktailbarapp/pages/cocktail/CocktailElement.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/CreateCocktailModal.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/CocktailElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -53,38 +53,31 @@ class _CocktailPageState extends State<CocktailPage> {
           return CreateCocktailModal();
         });
   }
-final List<String> prova= <String>["prova", "prova2"];
+
   void loadElementsFromFirebase() {
-  // Ottieni la sottocollezione di elementi del magazzino
-  db
-  .collection('Cocktails')
-  .snapshots()
-  .listen((elementiSnapshot) {
-    setState(() {
-      _elementi.clear();
-      _filteredElementi.clear();
-      for (var elementoDoc in elementiSnapshot.docs) {
-        Map<String, dynamic> data = elementoDoc.data();
-        
-        // Effettua il casting esplicito degli ingredienti a List<String>
-        List<String> ingredienti = List<String>.from(data['ingredients']);
-        
-        _elementi.add(CocktailElement(
-          idElemento: elementoDoc.id, // ID dell'elemento
-          nome: data['name'],
-          descrizione: data['description'],
-          ingredienti: ingredienti, // Usa la lista di stringhe castata
-        ));
-      }
-      _filteredElementi.addAll(_elementi);
+    // Ottieni la sottocollezione di elementi del magazzino
+    db.collection('Cocktails').snapshots().listen((elementiSnapshot) {
+      setState(() {
+        _elementi.clear();
+        _filteredElementi.clear();
+        for (var elementoDoc in elementiSnapshot.docs) {
+          Map<String, dynamic> data = elementoDoc.data();
+
+          // Effettua il casting esplicito degli ingredienti a List<String>
+          List<String> ingredienti = List<String>.from(data['ingredients']);
+
+          _elementi.add(CocktailElement(
+            idElemento: elementoDoc.id, // ID dell'elemento
+            nome: data['name'],
+            descrizione: data['description'],
+            ingredienti: ingredienti, // Usa la lista di stringhe castata
+          ));
+        }
+        _filteredElementi.addAll(_elementi);
+      });
     });
-  });
-
-
-
-}
+  }
 //List.from(data['ingredients'])
-  
 
   @override
   Widget build(BuildContext context) {
@@ -122,11 +115,10 @@ final List<String> prova= <String>["prova", "prova2"];
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: CocktailElement(
-                    idElemento: element.idElemento,
-                    descrizione: element.descrizione,
-                    nome: element.nome,
-                    ingredienti: element.ingredienti
-                  ),
+                      idElemento: element.idElemento,
+                      descrizione: element.descrizione,
+                      nome: element.nome,
+                      ingredienti: element.ingredienti),
                 );
               }).toList(),
             ),
