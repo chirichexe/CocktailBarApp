@@ -41,7 +41,7 @@ class _MagazzinoState extends State<Magazzino> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MagazzinoNavigator(id: widget.id)),
+                    builder: (context) => MagazzinoNavigator(id: widget.id, nome: widget.nome,)),
               );
             },
             text: 'Apri',

@@ -6,8 +6,9 @@ import 'package:getwidget/getwidget.dart';
 
 class MagazzinoNavigator extends StatefulWidget {
   final String id;
+  final String nome;
 
-  const MagazzinoNavigator({super.key, required this.id});
+  const MagazzinoNavigator({super.key, required this.id, required this.nome});
 
   @override
   State<MagazzinoNavigator> createState() => _MagazzinoNavigatorState();
@@ -88,7 +89,9 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Magazzino ${widget.nome}')
+      ),
       body: Column(
         children: [
           Container(
