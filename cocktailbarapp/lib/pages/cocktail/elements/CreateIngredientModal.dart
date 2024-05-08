@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import '../classes/Ingredient.dart';
 
 class CreateIngredientModal extends StatelessWidget {
-  final List<String> nomi;
-  final List<double> quantita;
+  final List<Ingredient> ingredients;
   final Function updateLists;
 
   CreateIngredientModal({
     Key? key,
-    required this.nomi,
-    required this.quantita,
+    required this.ingredients,
     required this.updateLists,
   }) : super(key: key);
 
@@ -49,8 +48,7 @@ class CreateIngredientModal extends StatelessWidget {
                 double quantitaVal =
                     double.tryParse(controllerQuantita.text) ?? 0.0;
 
-                nomi.add(nome);
-                quantita.add(quantitaVal);
+                ingredients.add(Ingredient(name: nome, qty: quantitaVal));
 
                 // Chiudi il modal e aggiorna le liste nel CreateCocktailModal
                 Navigator.of(context).pop();

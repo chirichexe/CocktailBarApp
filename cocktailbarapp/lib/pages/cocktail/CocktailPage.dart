@@ -63,15 +63,14 @@ class _CocktailPageState extends State<CocktailPage> {
         for (var elementoDoc in elementiSnapshot.docs) {
           Map<String, dynamic> data = elementoDoc.data();
 
-          // Effettua il casting esplicito degli ingredienti a List<String>
-          List<String> ingredienti = List<String>.from(data['ingredients']);
-
           _elementi.add(CocktailElement(
-            idElemento: elementoDoc.id, // ID dell'elemento
-            nome: data['name'],
-            descrizione: data['description'],
-            ingredienti: ingredienti, // Usa la lista di stringhe castata
-          ));
+              idElemento: elementoDoc.id, // ID dell'elemento
+              nome: data['name'],
+              descrizione: data['description'],
+              metodo: data['method'],
+              garnish: data['garnish'],
+              ghiaccio: data['ice'],
+              bicchiere: data['glass']));
         }
         _filteredElementi.addAll(_elementi);
       });

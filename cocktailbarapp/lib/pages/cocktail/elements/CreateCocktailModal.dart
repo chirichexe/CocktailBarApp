@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/CreateIngredientModal.dart';
 import 'package:flutter/material.dart';
+import '../classes/Ingredient.dart';
 
-List<String> nomi = [];
-List<double> quantita = [];
+List<Ingredient> ingredienti = [];
 
 class CreateCocktailModal extends StatefulWidget {
   CreateCocktailModal({Key? key}) : super(key: key);
@@ -28,8 +28,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
       context: context,
       builder: (BuildContext context) {
         return CreateIngredientModal(
-          nomi: nomi,
-          quantita: quantita,
+          ingredients: ingredienti,
           updateLists: _updateLists,
         );
       },
@@ -114,7 +113,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                       // Lista degli ingredienti
                       Wrap(
                         children: [
-                          for (var ingrediente in nomi)
+                          for (var ingrediente in ingredienti)
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 5),
                               padding: EdgeInsets.all(10),
@@ -122,7 +121,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                 border: Border.all(),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Text(ingrediente),
+                              child: Text(ingrediente.name),
                             ),
                           GestureDetector(
                             onTap: () => _openIngredientModal(context),
@@ -148,15 +147,30 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'glass': true,
-                                'ingredients': nomi
+                                'ice': true
+                              }).then((cocktailDocRef) {
+                                for (var ingrediente in ingredienti) {
+                                  cocktailDocRef.collection('ingredients').add({
+                                    'name': ingrediente.name,
+                                    'quantity': ingrediente.qty
+                                  }).then((_) {
+                                    print('Ingrediente aggiunto con successo.');
+                                  }).catchError((error) {
+                                    print(
+                                        'Errore durante l\'aggiunta dell\'ingrediente: $error');
+                                  });
+                                }
+                                print(
+                                    'Dati inseriti con successo nel database Firebase.');
+                              }).catchError((error) {
+                                print(
+                                    'Errore durante l\'inserimento dei dati nel database Firebase: $error');
                               });
-                              print(
-                                  'Dati inseriti con successo nel database Firebase.');
                             } catch (error) {
                               print(
                                   'Errore durante l\'inserimento dei dati nel database Firebase: $error');
                             }
+                            ingredienti.clear();
                             Navigator.of(context).pop();
                           },
                           child: const Text('Aggiungi'))

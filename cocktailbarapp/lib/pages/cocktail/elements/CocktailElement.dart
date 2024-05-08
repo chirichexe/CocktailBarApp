@@ -3,17 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class CocktailElement extends StatefulWidget {
+  final String idElemento;
+
   final String nome;
   final String descrizione;
-  final String idElemento;
-  final List<String> ingredienti;
+  final String metodo;
+  final String garnish;
+  final String bicchiere;
+  final bool ghiaccio;
 
   const CocktailElement(
       {super.key,
+      required this.idElemento,
       required this.nome,
       required this.descrizione,
-      required this.idElemento,
-      required this.ingredienti});
+      required this.metodo,
+      required this.garnish,
+      required this.bicchiere,
+      required this.ghiaccio});
 
   @override
   State<CocktailElement> createState() => _CocktailElementState();
