@@ -65,12 +65,7 @@ class _CocktailPageState extends State<CocktailPage> {
 
           _elementi.add(CocktailElement(
               idElemento: elementoDoc.id, // ID dell'elemento
-              nome: data['name'],
-              descrizione: data['description'],
-              metodo: data['method'],
-              garnish: data['garnish'],
-              ghiaccio: data['ice'],
-              bicchiere: data['glass']));
+              nome: data['name']));
         }
         _filteredElementi.addAll(_elementi);
       });
@@ -114,10 +109,9 @@ class _CocktailPageState extends State<CocktailPage> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: CocktailElement(
-                      idElemento: element.idElemento,
-                      descrizione: element.descrizione,
-                      nome: element.nome,
-                      ingredienti: element.ingredienti),
+                    idElemento: element.idElemento,
+                    nome: element.nome,
+                  ),
                 );
               }).toList(),
             ),

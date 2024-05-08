@@ -4,23 +4,10 @@ import 'package:getwidget/getwidget.dart';
 
 class CocktailElement extends StatefulWidget {
   final String idElemento;
-
   final String nome;
-  final String descrizione;
-  final String metodo;
-  final String garnish;
-  final String bicchiere;
-  final bool ghiaccio;
 
   const CocktailElement(
-      {super.key,
-      required this.idElemento,
-      required this.nome,
-      required this.descrizione,
-      required this.metodo,
-      required this.garnish,
-      required this.bicchiere,
-      required this.ghiaccio});
+      {super.key, required this.idElemento, required this.nome});
 
   @override
   State<CocktailElement> createState() => _CocktailElementState();
@@ -50,10 +37,7 @@ class _CocktailElementState extends State<CocktailElement> {
         context: context,
         builder: (BuildContext context) {
           return CocktailElementModal(
-            nome: widget.nome,
-            descrizione: widget.descrizione,
-            idEl: widget.idElemento,
-            ingredienti: widget.ingredienti,
+            idElemento: widget.idElemento,
           );
         });
   }

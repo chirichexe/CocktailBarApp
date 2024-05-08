@@ -3,17 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class CocktailElementModal extends StatelessWidget {
-  final String nome;
-  final String descrizione;
-  final String idEl;
-  final List<String> ingredienti;
+  final String idElemento;
 
-  const CocktailElementModal(
-      {super.key,
-      required this.nome,
-      required this.descrizione,
-      required this.idEl,
-      required this.ingredienti});
+  const CocktailElementModal({super.key, required this.idElemento});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +32,7 @@ class CocktailElementModal extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        nome,
+                        "nome",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -48,29 +40,15 @@ class CocktailElementModal extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        descrizione,
+                        "descrizione",
                         //da cambiare
                         style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      Text(
-                        //sistemare da qui: non devono esserci due Text, ma un elemento ListView con figli Text
-                        ingredienti.first,
-                        //da cambiare
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        ingredienti.elementAt(1),
-                        //da cambiare
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
+                      //INSERIRE LISTA INGREDIENTI MODIFICABILE
                       //oggetto per mostrare ingredienti
-                      DeleteCocktailElementButton(idElemento: idEl),
+                      DeleteCocktailElementButton(idElemento: idElemento),
                     ],
                   ),
                 ),

@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/CreateIngredientModal.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/IngredientItem.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../classes/Ingredient.dart';
 
 List<Ingredient> ingredienti = [];
@@ -110,19 +113,12 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      // Lista degli ingredienti
-                      Wrap(
+                      ListWheelScrollView(
+                        itemExtent: 1000,
                         children: [
                           for (var ingrediente in ingredienti)
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(ingrediente.name),
-                            ),
+                            //Aggiungi IngredientItem
+                            IngredientItem(ingredient: ingrediente),
                           GestureDetector(
                             onTap: () => _openIngredientModal(context),
                             child: Container(
@@ -184,6 +180,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
               alignment: Alignment.bottomRight,
               child: TextButton(
                 onPressed: () {
+                  ingredienti.clear();
                   Navigator.of(context).pop();
                 },
                 child: const Text('Chiudi'),
