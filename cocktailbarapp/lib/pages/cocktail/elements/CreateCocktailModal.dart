@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocktailbarapp/elements/checkable_element.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/CreateIngredientModal.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/IngredientItem.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
   TextEditingController controllerDescrizione = TextEditingController();
   TextEditingController controllerGarnish = TextEditingController();
   TextEditingController controllerMetodo = TextEditingController();
+  CheckableElement ghiaccio= new CheckableElement(initialValue: false, elementName: "ghiaccio");
 
   void _updateLists() {
     setState(
@@ -38,18 +40,23 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
     );
   }
 
+  void _deleteIngredient(Ingredient ingredient) {
+    setState(() {
+      ingredienti.remove(ingredient);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // Impostare la larghezza desiderata
       child: Container(
         width: MediaQuery.of(context).size.width *
             0.7, // 70% della larghezza dello schermo
         height: MediaQuery.of(context).size.height *
             0.7, // Altezza fissa o percentuale
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             Row(
               children: [
@@ -63,7 +70,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Crea un elemento",
+                        "Crea un cocktail",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -72,7 +79,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                       TextField(
                         controller: controllerNome,
                         decoration: const InputDecoration(
-                          labelText: 'Nome elemento',
+                          labelText: 'Nome cocktail',
                           border: OutlineInputBorder(),
                         ),
                         style: const TextStyle(
@@ -112,13 +119,15 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                           fontSize: 16,
                         ),
                       ),
+                      ghiaccio,     //GHIACCIO CHECKBOX
                       const SizedBox(height: 10),
-                      ListWheelScrollView(
-                        itemExtent: 1000,
+                      Wrap(
                         children: [
                           for (var ingrediente in ingredienti)
                             //Aggiungi IngredientItem
-                            IngredientItem(ingredient: ingrediente),
+                            IngredientItem(
+                              ingredient: ingrediente,
+                              onDelete: () => _deleteIngredient(ingrediente),),
                           GestureDetector(
                             onTap: () => _openIngredientModal(context),
                             child: Container(
@@ -135,6 +144,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                       ),
                       ElevatedButton(
                           onPressed: () {
+                            List<Ingredient> ingredientsCopy = List.from(ingredienti);
                             try {
                               FirebaseFirestore.instance
                                   .collection('Cocktails')
@@ -143,14 +153,15 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'ice': true
+                                'ice': ghiaccio.getValore(),
                               }).then((cocktailDocRef) {
-                                for (var ingrediente in ingredienti) {
+                                print(ingredienti);
+                                for (var ingrediente in ingredientsCopy) {
                                   cocktailDocRef.collection('ingredients').add({
                                     'name': ingrediente.name,
                                     'quantity': ingrediente.qty
                                   }).then((_) {
-                                    print('Ingrediente aggiunto con successo.');
+                                    print('Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
                                   }).catchError((error) {
                                     print(
                                         'Errore durante l\'aggiunta dell\'ingrediente: $error');

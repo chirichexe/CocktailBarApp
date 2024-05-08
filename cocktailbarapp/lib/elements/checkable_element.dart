@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class CheckableElement extends StatefulWidget {
   final bool initialValue;
   final String elementName;
-  final void Function(bool) onChanged;
 
   const CheckableElement({
     Key? key,
     required this.initialValue,
     required this.elementName,
-    required this.onChanged,
   }) : super(key: key);
+
+  bool getValore() {
+    return initialValue;
+  }
 
   @override
   _CheckableElementState createState() => _CheckableElementState();
@@ -27,6 +29,10 @@ class _CheckableElementState extends State<CheckableElement> {
     _elementName = widget.elementName;
   }
 
+  bool getValore() {
+    return _isChecked;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +45,6 @@ class _CheckableElementState extends State<CheckableElement> {
               setState(() {
                 _isChecked = value!;
               });
-              widget.onChanged(value!);
             },
           ),
           const SizedBox(

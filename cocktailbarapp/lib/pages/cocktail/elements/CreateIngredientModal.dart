@@ -26,21 +26,21 @@ class CreateIngredientModal extends StatelessWidget {
           children: [
             TextField(
               controller: controllerNome,
-              decoration: InputDecoration(
-                labelText: 'Nome',
+              decoration: const InputDecoration(
+                labelText: 'Nome Ingrediente',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: controllerQuantita,
-              keyboardType: TextInputType.numberWithOptions(
+              keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ), // Accetta solo numeri e decimali
-              decoration: InputDecoration(
-                labelText: 'Quantità',
+              decoration: const InputDecoration(
+                labelText: 'Quantità (in ml)',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 // Aggiungi il nome e la quantità alle liste

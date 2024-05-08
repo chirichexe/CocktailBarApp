@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;
+  final VoidCallback onDelete;
 
-  const IngredientItem({Key? key, required this.ingredient}) : super(key: key);
+  const IngredientItem({Key? key, required this.ingredient, required this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +21,26 @@ class IngredientItem extends StatelessWidget {
         children: [
           Text(
             ingredient.name,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14, // Font size ridotto
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 2), // Spaziatura ridotta
+          const SizedBox(height: 2), // Spaziatura ridotta
           Text(
             '${ingredient.qty.toStringAsFixed(2)} ml',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 10, // Font size ridotto
               fontStyle: FontStyle.italic,
             ),
           ),
-          SizedBox(height: 2), // Spaziatura ridotta
+          const SizedBox(height: 2), // Spaziatura ridotta
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () {
-                  // Add delete functionality here
-                },
+                onPressed: onDelete
               ),
             ],
           ),
