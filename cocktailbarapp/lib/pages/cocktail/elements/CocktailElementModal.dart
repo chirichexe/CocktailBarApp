@@ -2,70 +2,113 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
+// ignore: must_be_immutable
 class CocktailElementModal extends StatelessWidget {
   final String idElemento;
+  CocktailElementModal({super.key, required this.idElemento});
 
-  const CocktailElementModal({super.key, required this.idElemento});
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+  
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // Impostare la larghezza desiderata
       child: Container(
-        width: MediaQuery.of(context).size.width *
+       width: MediaQuery.of(context).size.width *
             0.7, // 70% della larghezza dello schermo
         height: MediaQuery.of(context).size.height *
             0.5, // Altezza fissa o percentuale
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+        child: FutureBuilder<DocumentSnapshot>(
+        future: db.collection('Cocktails').doc(idElemento).get(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return Text('Errore: ${snapshot.error}');
+          }
+          if (!snapshot.hasData) {
+            return Text('Nessun dato trovato');
+          }
+          // Estrai i dati dallo snapshot e costruisci l'interfaccia utente
+          final Map<String, dynamic>? data = snapshot.data!.data() as Map<String, dynamic>?;
+          if(data!=null) {
+          return Container(
+            // Resto del codice per la finestra di dialogo...
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: Image.asset('assets/image.png'), // Immagine
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Image.asset('assets/image.png'), // Immagine
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data['name'] ?? '',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            data['description'] ?? '',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            data['garnish'] ?? '',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            data['method'] ?? '',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            "ghiaccio: ${data['ice']}",
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          //INSERIRE LISTA INGREDIENTI MODIFICABILE
+                          //oggetto per mostrare ingredienti
+                          DeleteCocktailElementButton(idElemento: idElemento),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "nome",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "descrizione",
-                        //da cambiare
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      //INSERIRE LISTA INGREDIENTI MODIFICABILE
-                      //oggetto per mostrare ingredienti
-                      DeleteCocktailElementButton(idElemento: idElemento),
-                    ],
+                const Spacer(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Chiudi'),
                   ),
                 ),
               ],
             ),
-            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Chiudi'),
-              ),
-            ),
-          ],
-        ),
+          );
+          } else {
+            print("collezione non trovata");
+            return Container();
+          }
+        },
+      ),
       ),
     );
   }

@@ -10,10 +10,6 @@ class CheckableElement extends StatefulWidget {
     required this.elementName,
   }) : super(key: key);
 
-  bool getValore() {
-    return initialValue;
-  }
-
   @override
   _CheckableElementState createState() => _CheckableElementState();
 }

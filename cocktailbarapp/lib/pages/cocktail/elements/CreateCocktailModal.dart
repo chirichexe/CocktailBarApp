@@ -22,6 +22,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
   TextEditingController controllerGarnish = TextEditingController();
   TextEditingController controllerMetodo = TextEditingController();
   CheckableElement ghiaccio= new CheckableElement(initialValue: false, elementName: "ghiaccio");
+  
 
   void _updateLists() {
     setState(
@@ -46,6 +47,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
     });
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -119,7 +121,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                           fontSize: 16,
                         ),
                       ),
-                      ghiaccio,     //GHIACCIO CHECKBOX
+                      ghiaccio,
                       const SizedBox(height: 10),
                       Wrap(
                         children: [
@@ -153,7 +155,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'ice': ghiaccio.getValore(),
+                                'ice': true,
                               }).then((cocktailDocRef) {
                                 print(ingredienti);
                                 for (var ingrediente in ingredientsCopy) {
