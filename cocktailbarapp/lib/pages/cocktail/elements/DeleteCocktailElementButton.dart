@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocktailbarapp/elements/ShouldDeleteDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -17,18 +18,12 @@ class _DeleteCocktailElementButtonState
   Widget build(BuildContext context) {
     return GFButton(
       onPressed: () async {
-        try {
-          // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
-          await FirebaseFirestore.instance
+        await ShouldDeleteDialog.showDeleteDialog(
+          context,
+          FirebaseFirestore.instance
               .collection('Cocktails')
-              .doc(widget.idElemento)
-              .delete();
-
-          // Se esiste un documento che corrisponde alle condizioni, elimina il documento
-        } catch (error) {
-          print('Errore durante l\'eliminazione dell\'elemento: $error');
-        }
-        Navigator.of(context).pop();
+              .doc(widget.idElemento),
+        );
       },
       color: Colors.purple,
       text: 'Cancella Elemento',

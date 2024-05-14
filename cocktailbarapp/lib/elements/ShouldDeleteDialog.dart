@@ -23,8 +23,9 @@ class ShouldDeleteDialog extends StatelessWidget {
         ),
         TextButton(
           child: Text('Sì'),
-          onPressed: () {
-            // Qui puoi fare qualcosa con documentReference
+          onPressed: () async {
+            await documentReference
+                .delete(); // Chiamata al metodo delete sul DocumentReference
             Navigator.of(context).pop(true); // Chiude il dialog e ritorna true
           },
         ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocktailbarapp/elements/ShouldDeleteDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -54,7 +55,8 @@ class MagazzinoElementModal extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      DeleteMagazzinoElementButton(idMagazzino: idMag, idElemento: idEl),
+                      DeleteMagazzinoElementButton(
+                          idMagazzino: idMag, idElemento: idEl),
                     ],
                   ),
                 ),
@@ -77,40 +79,32 @@ class MagazzinoElementModal extends StatelessWidget {
   }
 }
 
-
 class DeleteMagazzinoElementButton extends StatefulWidget {
   final String idMagazzino;
   final String idElemento;
-  const DeleteMagazzinoElementButton({super.key, required this.idMagazzino, required this.idElemento});
+  const DeleteMagazzinoElementButton(
+      {super.key, required this.idMagazzino, required this.idElemento});
 
   @override
-  State<DeleteMagazzinoElementButton> createState() => _DeleteMagazzinoElementButtonState();
+  State<DeleteMagazzinoElementButton> createState() =>
+      _DeleteMagazzinoElementButtonState();
 }
 
-class _DeleteMagazzinoElementButtonState extends State<DeleteMagazzinoElementButton> {
-
+class _DeleteMagazzinoElementButtonState
+    extends State<DeleteMagazzinoElementButton> {
   @override
   Widget build(BuildContext context) {
     return GFButton(
       onPressed: () async {
-        try {
-      // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
-          await FirebaseFirestore.instance
-          .collection('Magazzini')
-          .doc(widget.idMagazzino)
-          .collection('Elements')
-          .doc(widget.idElemento)
-          .delete();
-
-      // Se esiste un documento che corrisponde alle condizioni, elimina il documento
-        } catch (error) {
-          print('Errore durante l\'eliminazione dell\'elemento: $error');
-        }
-        Navigator.of(context).pop();
+        await ShouldDeleteDialog.showDeleteDialog(
+          context,
+          FirebaseFirestore.instance
+              .collection('Magazzini')
+              .doc(widget.idMagazzino)
+              .collection('Elements')
+              .doc(widget.idElemento),
+        );
       },
-      color: Colors.purple,
-      text: 'Cancella Elemento',
-      textColor: Colors.white,
     );
   }
 }

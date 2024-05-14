@@ -18,10 +18,12 @@ class _DeleteCocktailElementButtonState extends State<DeleteMagazzinoButton> {
   Widget build(BuildContext context) {
     return GFButton(
       onPressed: () async {
-        return ShouldDeleteDialog(
-            documentReference: FirebaseFirestore.instance
-                .collection('Magazzini')
-                .doc(idElemento));
+        await ShouldDeleteDialog.showDeleteDialog(
+          context,
+          FirebaseFirestore.instance
+              .collection('Magazzini')
+              .doc(widget.idElemento),
+        );
       },
       color: Colors.purple,
       text: 'Cancella Magazzino',
