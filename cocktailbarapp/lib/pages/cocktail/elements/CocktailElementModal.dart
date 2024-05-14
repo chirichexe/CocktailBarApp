@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocktailbarapp/pages/cocktail/elements/DeteleCocktailElementButton.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/DeleteCocktailElementButton.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/IngredientlList.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';

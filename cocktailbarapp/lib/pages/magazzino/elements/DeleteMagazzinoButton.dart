@@ -18,20 +18,10 @@ class _DeleteCocktailElementButtonState extends State<DeleteMagazzinoButton> {
   Widget build(BuildContext context) {
     return GFButton(
       onPressed: () async {
-        bool shouldDelete = await ShouldDeleteDialog.showDeleteDialog(context);
-        if (shouldDelete) {
-          try {
-            // Esegui una query per trovare il documento che corrisponde alle condizioni specificate
-            await FirebaseFirestore.instance
+        return ShouldDeleteDialog(
+            documentReference: FirebaseFirestore.instance
                 .collection('Magazzini')
-                .doc(widget.idElemento)
-                .delete();
-
-            // Se esiste un documento che corrisponde alle condizioni, elimina il documento
-          } catch (error) {
-            print('Errore durante l\'eliminazione dell\'elemento: $error');
-          }
-        }
+                .doc(idElemento));
       },
       color: Colors.purple,
       text: 'Cancella Magazzino',

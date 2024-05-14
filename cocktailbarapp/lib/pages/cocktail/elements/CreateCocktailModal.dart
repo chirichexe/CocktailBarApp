@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocktailbarapp/elements/checkable_element.dart';
+import 'package:cocktailbarapp/elements/CheckableElement.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/CreateIngredientModal.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/IngredientItem.dart';
 import 'package:flutter/cupertino.dart';
