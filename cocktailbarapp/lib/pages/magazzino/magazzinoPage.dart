@@ -17,7 +17,6 @@ class _MagazzinoState extends State<MagazzinoPage> {
   @override
   void initState() {
     super.initState();
-
     loadElementsFromFirebase();
   }
 
@@ -27,20 +26,23 @@ class _MagazzinoState extends State<MagazzinoPage> {
         .collection('Magazzini')
         .snapshots()
         .listen((QuerySnapshot querySnapshot) {
+      List<Magazzino> newElementi = [];
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        newElementi.add(Magazzino(
+          id: doc.id,
+          nome: data['name'],
+          descrizione: data['description'],
+        ));
+      }
       setState(() {
-        querySnapshot.docs.forEach((doc) {
-          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-          _elementi.add(Magazzino(
-            id: doc.id,
-            nome: data['name'],
-            descrizione: data['description'],
-          ));
-        });
+        _elementi.clear();
+        _elementi.addAll(newElementi);
       });
     });
   }
 
-void onPressedButton() {
+  void onPressedButton() {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -50,8 +52,7 @@ void onPressedButton() {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Pagina Magazzino'),
       ),
@@ -70,10 +71,11 @@ void onPressedButton() {
               ],
             ),
           ),
-        Expanded(
-          child: ListaMagazzini(elencoMagazzini: _elementi),
-        ),
-      ]),
-    ));
+          Expanded(
+            child: ListaMagazzini(elencoMagazzini: _elementi),
+          ),
+        ],
+      ),
+    );
   }
 }

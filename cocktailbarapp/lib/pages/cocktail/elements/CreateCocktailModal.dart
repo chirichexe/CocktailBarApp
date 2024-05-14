@@ -5,6 +5,7 @@ import 'package:cocktailbarapp/pages/cocktail/elements/IngredientItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:getwidget/getwidget.dart';
 import '../classes/Ingredient.dart';
 
 List<Ingredient> ingredienti = [];
@@ -17,12 +18,13 @@ class CreateCocktailModal extends StatefulWidget {
 }
 
 class _CreateCocktailModalState extends State<CreateCocktailModal> {
+  final GlobalKey<CheckableElementState> _checkableElementKey =
+      GlobalKey<CheckableElementState>();
+
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerDescrizione = TextEditingController();
   TextEditingController controllerGarnish = TextEditingController();
   TextEditingController controllerMetodo = TextEditingController();
-  CheckableElement ghiaccio= new CheckableElement(initialValue: false, elementName: "ghiaccio");
-  
 
   void _updateLists() {
     setState(
@@ -47,7 +49,6 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
     });
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -121,7 +122,10 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                           fontSize: 16,
                         ),
                       ),
-                      ghiaccio,
+                      CheckableElement(
+                          key: _checkableElementKey,
+                          initialValue: false,
+                          elementName: "ghiaccio"),
                       const SizedBox(height: 10),
                       Wrap(
                         children: [
@@ -129,7 +133,8 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                             //Aggiungi IngredientItem
                             IngredientItem(
                               ingredient: ingrediente,
-                              onDelete: () => _deleteIngredient(ingrediente),),
+                              onDelete: () => _deleteIngredient(ingrediente),
+                            ),
                           GestureDetector(
                             onTap: () => _openIngredientModal(context),
                             child: Container(
@@ -146,7 +151,8 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            List<Ingredient> ingredientsCopy = List.from(ingredienti);
+                            List<Ingredient> ingredientsCopy =
+                                List.from(ingredienti);
                             try {
                               FirebaseFirestore.instance
                                   .collection('Cocktails')
@@ -155,7 +161,9 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'ice': true,
+                                'ice': _checkableElementKey.currentState
+                                        ?.getValore() ??
+                                    false,
                               }).then((cocktailDocRef) {
                                 print(ingredienti);
                                 for (var ingrediente in ingredientsCopy) {
@@ -163,7 +171,8 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                     'name': ingrediente.name,
                                     'quantity': ingrediente.qty
                                   }).then((_) {
-                                    print('Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
+                                    print(
+                                        'Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
                                   }).catchError((error) {
                                     print(
                                         'Errore durante l\'aggiunta dell\'ingrediente: $error');
@@ -188,7 +197,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                 ),
               ],
             ),
-            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
+            const Spacer(),
             Align(
               alignment: Alignment.bottomRight,
               child: TextButton(

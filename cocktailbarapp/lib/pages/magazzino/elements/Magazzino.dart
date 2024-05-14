@@ -1,3 +1,4 @@
+import 'package:cocktailbarapp/pages/magazzino/elements/DeleteMagazzinoButton.dart';
 import 'package:cocktailbarapp/pages/magazzino/elements/MagazzinoNavigator.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -41,11 +42,15 @@ class _MagazzinoState extends State<Magazzino> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MagazzinoNavigator(id: widget.id, nome: widget.nome,)),
+                    builder: (context) => MagazzinoNavigator(
+                          id: widget.id,
+                          nome: widget.nome,
+                        )),
               );
             },
             text: 'Apri',
-          )
+          ),
+          DeleteMagazzinoButton(idElemento: widget.id)
         ],
       ),
     );
