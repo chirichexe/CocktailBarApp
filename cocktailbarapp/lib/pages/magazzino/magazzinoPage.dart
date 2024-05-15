@@ -1,9 +1,9 @@
-import 'package:cocktailbarapp/pages/magazzino/elements/CreateMagazzinoModal.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/ListaMagazzini.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/Magazzino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:cocktailbarapp/pages/magazzino/elements/CreateMagazzinoModal.dart';
+import 'package:cocktailbarapp/pages/magazzino/elements/ListaMagazzini.dart';
+import 'package:cocktailbarapp/pages/magazzino/elements/Magazzino.dart';
 
 class MagazzinoPage extends StatefulWidget {
   @override
@@ -56,23 +56,25 @@ class _MagazzinoState extends State<MagazzinoPage> {
       appBar: AppBar(
         title: const Text('Pagina Magazzino'),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: [
-                GFIconButton(
-                  padding: const EdgeInsets.all(15.0),
-                  icon: const Icon(Icons.plus_one),
-                  onPressed: onPressedButton,
-                  color: Colors.black,
-                ),
-              ],
-            ),
+      body: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: ListaMagazzini(elencoMagazzini: _elementi),
+              ),
+            ],
           ),
-          Expanded(
-            child: ListaMagazzini(elencoMagazzini: _elementi),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: onPressedButton,
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.plus_one),
+              elevation: 4,
+            ),
           ),
         ],
       ),
