@@ -18,88 +18,105 @@ class CocktailElementModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Container(
-        width: MediaQuery.of(context).size.width *
-            0.8, // 70% della larghezza dello schermo
-        height: MediaQuery.of(context).size.height *
-            0.8, // Altezza fissa o percentuale
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height * 0.8,
         padding: const EdgeInsets.all(20.0),
-        child: FutureBuilder(
+        child: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance
               .collection('Cocktails')
               .doc(idElemento)
               .get(),
-          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: CircularProgressIndicator(), // Indicatore di caricamento
+                child: CircularProgressIndicator(
+                  color: Colors.blueAccent,
+                ),
               );
             }
 
             if (snapshot.hasError) {
-              return Container(
-                alignment: Alignment.center,
-                child: Text('Errore: ${snapshot.error}'),
+              return Center(
+                child: Text('Errore: ${snapshot.error}',
+                    style: TextStyle(color: Colors.redAccent)),
               );
             }
 
             if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Container(
-                alignment: Alignment.center,
-                child: Text('Nessun cocktail trovato con l\'ID fornito.'),
+              return Center(
+                child: Text(
+                  'Nessun cocktail trovato con l\'ID fornito.',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
               );
             }
 
             var data = snapshot.data!.data() as Map<String, dynamic>;
 
-            return Container(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                   Text(data['name'] ?? 'Nome del cocktail',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Text(
-                      'Metodo: ${data['method'] ?? 'Nessun metodo specificato'}'),
-                  Text(
-                      'Garnish: ${data['garnish'] ?? 'Nessun garnish specificato'}'),
-                  Text('Ghiaccio: ${data['ice'] ?? true ? 'Si' : 'No'}'),
-                  SizedBox(height: 20),
-                  Text('Ingredienti:',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  Expanded(
-                    child: IngredientList(ingredientsCollection: ingredients),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: TextButton(
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent)),
+                const SizedBox(height: 10),
+                Text('Metodo: ${data['method'] ?? 'Nessun metodo specificato'}',
+                    style: const TextStyle(color: Colors.blueGrey)),
+                const SizedBox(height: 10),
+                Text('Garnish: ${data['garnish'] ?? 'Nessun garnish specificato'}',
+                    style: const TextStyle(color: Colors.blueGrey)),
+                const SizedBox(height: 10),
+                Text('Ghiaccio: ${data['ice'] ?? true ? 'Si' : 'No'}',
+                    style: const TextStyle(color: Colors.blueGrey)),
+                const SizedBox(height: 20),
+                const Text('Ingredienti',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent)),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: IngredientList(ingredientsCollection: ingredients),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Chiudi'),
+                      child: const Text('Chiudi',
+                          style: TextStyle(color: Colors.blueAccent)),
                     ),
-                  ),
-                  GFButton(
-                    onPressed: () async {
-                      bool? shouldDelete =
-                          await ShouldDeleteDialog.showDeleteDialog(
-                        context,
-                        FirebaseFirestore.instance
-                            .collection('Cocktails')
-                            .doc(idElemento),
-                      );
+                    GFButton(
+                      onPressed: () async {
+                        bool? shouldDelete =
+                            await ShouldDeleteDialog.showDeleteDialog(
+                          context,
+                          FirebaseFirestore.instance
+                              .collection('Cocktails')
+                              .doc(idElemento),
+                        );
 
-                      if (shouldDelete == true) {
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    text: 'Delete', // Aggiungi il testo del pulsante
-                  )
-                ],
-              ),
+                        if (shouldDelete == true) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      text: 'Delete',
+                      color: Colors.redAccent,
+                      icon: Icon(Icons.delete, color: Colors.white),
+                      shape: GFButtonShape.pills,
+                    ),
+                  ],
+                ),
+              ],
             );
           },
         ),

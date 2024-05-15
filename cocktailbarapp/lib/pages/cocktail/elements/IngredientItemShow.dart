@@ -9,31 +9,48 @@ class IngredientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5), // Padding ridotto
+      margin: EdgeInsets.all(5), // Margine per separare gli elementi
+      padding: EdgeInsets.all(10), // Padding per contenitore
       decoration: BoxDecoration(
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(10), // Border radius ridotto
+        color: Colors.blue.shade50, // Colore di sfondo chiaro
+        border: Border.all(color: Colors.blueAccent),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.2), // Ombra leggera
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Row(
         children: [
-          Text(
-            ingredient.name,
-            style: const TextStyle(
-              fontSize: 14, // Font size ridotto
-              fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ingredient.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'Quantità: ${ingredient.qty.toStringAsFixed(2)} ml',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 2), // Spaziatura ridotta
-          Text(
-            '${ingredient.qty.toStringAsFixed(2)} ml',
-            style: const TextStyle(
-              fontSize: 10, // Font size ridotto
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-          const SizedBox(height: 2), // Spaziatura ridotta
         ],
       ),
     );

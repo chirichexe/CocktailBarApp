@@ -27,8 +27,7 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
   TextEditingController controllerMetodo = TextEditingController();
 
   void _updateLists() {
-    setState(
-        () {}); // Aggiorna lo stato del widget quando le liste vengono modificate
+    setState(() {}); // Aggiorna lo stato del widget quando le liste vengono modificate
   }
 
   _openIngredientModal(BuildContext context) {
@@ -52,118 +51,149 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: Container(
-        width: MediaQuery.of(context).size.width *
-            0.7, // 70% della larghezza dello schermo
-        height: MediaQuery.of(context).size.height *
-            0.7, // Altezza fissa o percentuale
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.height * 0.8,
         padding: const EdgeInsets.all(20.0),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Image.asset('assets/image.png'), // Immagine
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Crea un cocktail",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Crea un cocktail",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.blue,
+                          ),
                         ),
-                      ),
-                      TextField(
-                        controller: controllerNome,
-                        decoration: const InputDecoration(
-                          labelText: 'Nome cocktail',
-                          border: OutlineInputBorder(),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: controllerNome,
+                          decoration: InputDecoration(
+                            labelText: 'Nome cocktail',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                        style: const TextStyle(
-                          fontSize: 16,
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: controllerDescrizione,
+                          decoration: InputDecoration(
+                            labelText: 'Descrizione',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: controllerDescrizione,
-                        decoration: const InputDecoration(
-                          labelText: 'Descrizione',
-                          border: OutlineInputBorder(),
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: controllerMetodo,
+                          decoration: InputDecoration(
+                            labelText: 'Metodo',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                        style: const TextStyle(
-                          fontSize: 16,
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: controllerGarnish,
+                          decoration: InputDecoration(
+                            labelText: 'Garnish',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: controllerMetodo,
-                        decoration: const InputDecoration(
-                          labelText: 'Metodo',
-                          border: OutlineInputBorder(),
-                        ),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: controllerGarnish,
-                        decoration: const InputDecoration(
-                          labelText: 'Garnish',
-                          border: OutlineInputBorder(),
-                        ),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      CheckableElement(
+                        const SizedBox(height: 10),
+                        CheckableElement(
                           key: _checkableElementKey,
                           initialValue: false,
-                          elementName: "ghiaccio"),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        children: [
-                          for (var ingrediente in ingredienti)
-                            //Aggiungi IngredientItem
-                            IngredientItem(
-                              ingredient: ingrediente,
-                              onDelete: () => _deleteIngredient(ingrediente),
-                            ),
-                          GestureDetector(
-                            onTap: () => _openIngredientModal(context),
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(10),
+                          elementName: "Ghiaccio",
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 10.0,
+                          runSpacing: 10.0,
+                          children: [
+                            for (var ingrediente in ingredienti)
+                              IngredientItem(
+                                ingredient: ingrediente,
+                                onDelete: () => _deleteIngredient(ingrediente),
                               ),
-                              child: Icon(Icons.add),
-                            ),
-                          )
-                        ],
-                      ),
-                      ElevatedButton(
+                            GestureDetector(
+                              onTap: () => _openIngredientModal(context),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blueAccent),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Icon(Icons.add, color: Colors.blueAccent),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
                           onPressed: () {
-                            List<Ingredient> ingredientsCopy =
-                                List.from(ingredienti);
+                            List<Ingredient> ingredientsCopy = List.from(ingredienti);
                             try {
-                              FirebaseFirestore.instance
-                                  .collection('Cocktails')
-                                  .add({
+                              FirebaseFirestore.instance.collection('Cocktails').add({
                                 'name': controllerNome.text,
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'ice': _checkableElementKey.currentState
-                                        ?.getValore() ??
-                                    false,
+                                'ice': _checkableElementKey.currentState?.getValore() ?? false,
                               }).then((cocktailDocRef) {
                                 print(ingredienti);
                                 for (var ingrediente in ingredientsCopy) {
@@ -171,44 +201,51 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                     'name': ingrediente.name,
                                     'quantity': ingrediente.qty
                                   }).then((_) {
-                                    print(
-                                        'Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
+                                    print('Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
                                   }).catchError((error) {
-                                    print(
-                                        'Errore durante l\'aggiunta dell\'ingrediente: $error');
+                                    print('Errore durante l\'aggiunta dell\'ingrediente: $error');
                                   });
                                 }
-                                print(
-                                    'Dati inseriti con successo nel database Firebase.');
+                                print('Dati inseriti con successo nel database Firebase.');
                               }).catchError((error) {
-                                print(
-                                    'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                                print('Errore durante l\'inserimento dei dati nel database Firebase: $error');
                               });
                             } catch (error) {
-                              print(
-                                  'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                              print('Errore durante l\'inserimento dei dati nel database Firebase: $error');
                             }
                             ingredienti.clear();
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Aggiungi'))
-                    ],
+                          child: const Text('Aggiungi'),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  onPressed: () {
+                    ingredienti.clear();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Chiudi'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.blueAccent, padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   ),
                 ),
-              ],
-            ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {
-                  ingredienti.clear();
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Chiudi'),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

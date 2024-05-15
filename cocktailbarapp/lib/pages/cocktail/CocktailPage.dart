@@ -3,6 +3,7 @@ import 'package:cocktailbarapp/pages/cocktail/elements/CreateCocktailModal.dart'
 import 'package:cocktailbarapp/pages/cocktail/elements/CocktailElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CocktailPage extends StatefulWidget {
   const CocktailPage({super.key});
@@ -21,9 +22,7 @@ class _CocktailPageState extends State<CocktailPage> {
   @override
   void initState() {
     super.initState();
-
     loadElementsFromFirebase();
-
     _filteredElementi.addAll(_elementi);
     _searchController.addListener(() {
       filterElements();
@@ -55,14 +54,12 @@ class _CocktailPageState extends State<CocktailPage> {
   }
 
   void loadElementsFromFirebase() {
-    // Ottieni la sottocollezione di elementi del magazzino
     db.collection('Cocktails').snapshots().listen((elementiSnapshot) {
       setState(() {
         _elementi.clear();
         _filteredElementi.clear();
         for (var elementoDoc in elementiSnapshot.docs) {
           Map<String, dynamic> data = elementoDoc.data();
-
           _elementi.add(CocktailElement(
               idElemento: elementoDoc.id, // ID dell'elemento
               nome: data['name']));
@@ -71,12 +68,14 @@ class _CocktailPageState extends State<CocktailPage> {
       });
     });
   }
-//List.from(data['ingredients'])
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Cocktail Page', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blueAccent[100],
+      ),
       body: Column(
         children: [
           Container(
@@ -85,17 +84,25 @@ class _CocktailPageState extends State<CocktailPage> {
               children: [
                 GFIconButton(
                   padding: const EdgeInsets.all(15.0),
-                  icon: const Icon(Icons.plus_one),
+                  icon: const Icon(Icons.add, color: Colors.white),
                   onPressed: onPressedButton,
-                  color: Colors.black,
+                  color: Colors.blueAccent,
                 ),
+                SizedBox(width: 10),
                 Expanded(
                   flex: 2,
                   child: TextField(
+                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.white70),
                     controller: _searchController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Cerca...',
-                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.blue.shade50,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     ),
                   ),
                 ),
@@ -104,10 +111,23 @@ class _CocktailPageState extends State<CocktailPage> {
           ),
           Expanded(
             child: GridView.count(
-              crossAxisCount: 5,
+              crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              padding: const EdgeInsets.all(10.0),
               children: _filteredElementi.map((element) {
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
                   child: CocktailElement(
                     idElemento: element.idElemento,
                     nome: element.nome,

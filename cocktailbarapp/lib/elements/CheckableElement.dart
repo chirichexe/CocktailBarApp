@@ -32,12 +32,10 @@ class CheckableElementState extends State<CheckableElement> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20), // Ridotto per esempio
-      child: Row(
+    return Row(
         children: [
           GFCheckbox(
-            activeBgColor: GFColors.SUCCESS,
+            activeBgColor: Colors.blueAccent,
             size: GFSize.LARGE,
             type: GFCheckboxType.circle,
             onChanged: (value) {
@@ -51,9 +49,13 @@ class CheckableElementState extends State<CheckableElement> {
           ),
           const SizedBox(
               width: 8), // Spazio tra la casella di controllo e il testo
-          Text(_elementName), // Testo accanto alla casella di controllo
+          Text( _elementName,
+                style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              color: Colors.blueAccent)
+              ), // Testo accanto alla casella di controllo
         ],
-      ),
-    );
+      );
   }
 }

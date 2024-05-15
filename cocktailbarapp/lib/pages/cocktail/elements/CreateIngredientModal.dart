@@ -43,13 +43,13 @@ class CreateIngredientModal extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Aggiungi il nome e la quantità alle liste
+                if(!controllerNome.text.isEmpty){
                 String nome = controllerNome.text;
                 double quantitaVal =
                     double.tryParse(controllerQuantita.text) ?? 0.0;
 
                 ingredients.add(Ingredient(name: nome, qty: quantitaVal));
-
+                }
                 // Chiudi il modal e aggiorna le liste nel CreateCocktailModal
                 Navigator.of(context).pop();
                 updateLists();

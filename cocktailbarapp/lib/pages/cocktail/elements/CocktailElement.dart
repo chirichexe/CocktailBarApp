@@ -1,13 +1,11 @@
 import 'package:cocktailbarapp/pages/cocktail/elements/CocktailElementModal.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 
 class CocktailElement extends StatefulWidget {
   final String idElemento;
   final String nome;
 
-  const CocktailElement(
-      {super.key, required this.idElemento, required this.nome});
+  const CocktailElement({super.key, required this.idElemento, required this.nome});
 
   @override
   State<CocktailElement> createState() => _CocktailElementState();
@@ -21,12 +19,34 @@ class _CocktailElementState extends State<CocktailElement> {
         // Funzione per aprire il modale
         _showModal(context);
       },
-      child: GFCard(
-        color: const Color.fromARGB(255, 26, 5, 146),
-        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        title: GFListTile(
-          titleText: widget.nome,
-          color: GFColors.WHITE,
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        color: Colors.blue[600],
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.nome,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Icon(
+                Icons.local_drink,
+                color: Colors.white,
+                size: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -34,11 +54,12 @@ class _CocktailElementState extends State<CocktailElement> {
 
   void _showModal(BuildContext context) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CocktailElementModal(
-            idElemento: widget.idElemento,
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return CocktailElementModal(
+          idElemento: widget.idElemento,
+        );
+      },
+    );
   }
 }
