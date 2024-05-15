@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:cocktailbarapp/pages/homepage/homePage.dart';
+import 'package:cocktailbarapp/global/MyDrawer.dart';
 import 'pages/magazzino/magazzinoPage.dart';
 import 'pages/cocktail/CocktailPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,7 +27,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyDrawer(),
+      home: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/background.jpg'), // Imposta il percorso dell'immagine di sfondo
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: MyDrawer(), // Contenuto della tua app
+      ),
       routes: {
         '/magazzino': (context) => MagazzinoPage(),
         '/cocktail': (context) => CocktailPage(),
