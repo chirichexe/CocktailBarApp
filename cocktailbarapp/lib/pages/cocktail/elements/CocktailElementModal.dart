@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cocktailbarapp/elements/ShouldDeleteDialog.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/DeleteCocktailElementButton.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/IngredientlList.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,22 @@ class CocktailElementModal extends StatelessWidget {
                       child: const Text('Chiudi'),
                     ),
                   ),
-                  DeleteCocktailElementButton(idElemento: idElemento)
+                  GFButton(
+                    onPressed: () async {
+                      bool? shouldDelete =
+                          await ShouldDeleteDialog.showDeleteDialog(
+                        context,
+                        FirebaseFirestore.instance
+                            .collection('Cocktails')
+                            .doc(idElemento),
+                      );
+
+                      if (shouldDelete == true) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    text: 'Delete', // Aggiungi il testo del pulsante
+                  )
                 ],
               ),
             );
