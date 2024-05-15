@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
 import 'Magazzino.dart';
-
 class ListaMagazzini extends StatefulWidget {
   final List<Magazzino> elencoMagazzini;
-  const ListaMagazzini({super.key, required this.elencoMagazzini});
+  const ListaMagazzini({Key? key, required this.elencoMagazzini}) : super(key: key);
 
   @override
   State<ListaMagazzini> createState() => _ListaMagazziniState();
 }
 
 class _ListaMagazziniState extends State<ListaMagazzini> {
-  List<Magazzino> elencoMagazzini = [];
-
-  @override
-  void initState() {
-    super.initState();
-    elencoMagazzini = widget.elencoMagazzini;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView.count(
-          crossAxisCount: 3, // Numero di colonne
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          padding: const EdgeInsets.all(10.0),
-          children: List.generate(elencoMagazzini.length, (index) {
-            return elencoMagazzini[index];
-          })),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: widget.elencoMagazzini.length,
+          itemBuilder: (context, index) {
+            return AspectRatio(
+              aspectRatio: 1, // Mantieni un rapporto di aspetto quadrato
+              child: widget.elencoMagazzini[index],
+            );
+          },
+        ),
+      ),
     );
   }
 }

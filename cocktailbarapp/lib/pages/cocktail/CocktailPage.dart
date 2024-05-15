@@ -82,12 +82,13 @@ class _CocktailPageState extends State<CocktailPage> {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
-                GFIconButton(
-                  padding: const EdgeInsets.all(15.0),
-                  icon: const Icon(Icons.add, color: Colors.white),
-                  onPressed: onPressedButton,
-                  color: Colors.blueAccent,
-                ),
+                FloatingActionButton(
+              onPressed: onPressedButton,
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.plus_one),
+              elevation: 4,
+            ),
                 SizedBox(width: 10),
                 Expanded(
                   flex: 2,

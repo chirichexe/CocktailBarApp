@@ -9,17 +9,33 @@ class ShouldDeleteDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Conferma Cancellazione'),
-      content: Text('Sei sicuro di voler cancellare questo elemento?'),
+      title: const Text('Conferma Cancellazione',
+                  style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+      content: const Text('Sei sicuro di voler cancellare questo elemento?',
+                          style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal)),
       actions: <Widget>[
         TextButton(
-          child: Text('No'),
+          child: const Text('No',
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold)),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         TextButton(
-          child: Text('Sì'),
+          child: const Text('Sì',
+                            style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
           onPressed: () async {
             await documentReference.delete();
             Navigator.of(context).pop(true);

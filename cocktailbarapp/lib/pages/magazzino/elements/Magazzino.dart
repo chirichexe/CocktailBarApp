@@ -24,10 +24,12 @@ class Magazzino extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
-            height: constraints.maxHeight,
+            width: constraints.maxWidth * 0.9, // Larghezza massima del widget
+            height: constraints.maxWidth * 0.9, // Altezza massima del widget
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
+                color: Colors.blueAccent,
               ),
               child: GestureDetector(
                 onTap: () {
@@ -41,58 +43,53 @@ class Magazzino extends StatelessWidget {
                     ),
                   );
                 },
-                child: GFCard(
-                  color: Colors.blueAccent,
-                  elevation: 15, // Rimuove l'ombra di default di GFCard
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  titlePosition: GFPosition.start,
-                  title: GFListTile(
-                    avatar: const GFAvatar(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.warehouse,
                         color: Colors.blueAccent,
-                        size: 30,
+                        size: constraints.maxWidth * 0.15, // Dimensione dell'icona adattata alla larghezza dello schermo
                       ),
+                      radius: constraints.maxWidth * 0.1, // Dimensione del raggio del cerchio adattata alla larghezza dello schermo
                     ),
-                    title: Text(
+                    SizedBox(height: constraints.maxWidth * 0.05), // Spazio tra l'icona e il testo
+                    Text(
                       nome,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
-                        fontSize: 24,
+                        fontSize: constraints.maxWidth * 0.07, // Dimensione del testo adattata alla larghezza dello schermo
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    subTitle: Text(
+                    Text(
                       descrizione,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
-                        fontSize: 16,
+                        fontSize: constraints.maxWidth * 0.06, // Dimensione del testo adattata alla larghezza dello schermo
                         fontWeight: FontWeight.normal,
                         color: Colors.white70,
                       ),
                     ),
-                  ),
-                  content: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GFIconButton(
-                        onPressed: () async {
-                          await ShouldDeleteDialog.showDeleteDialog(
-                            context,
-                            FirebaseFirestore.instance
-                                .collection('Magazzini')
-                                .doc(id),
-                          );
-                        },
-                        icon: Icon(Icons.delete),
-                        shape: GFIconButtonShape.circle,
-                        color: Colors.redAccent,
-                      ),
+                    SizedBox(height: constraints.maxWidth * 0.05), // Spazio tra il testo e il pulsante
+                    GFIconButton(
+                      onPressed: () async {
+                        await ShouldDeleteDialog.showDeleteDialog(
+                          context,
+                          FirebaseFirestore.instance
+                              .collection('Magazzini')
+                              .doc(id),
+                        );
+                      },
+                      icon: Icon(Icons.delete),
+                      shape: GFIconButtonShape.circle,
+                      color: Colors.redAccent,
+                      iconSize: constraints.maxWidth * 0.08, // Dimensione dell'icona del pulsante adattata alla larghezza dello schermo
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

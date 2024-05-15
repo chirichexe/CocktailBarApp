@@ -24,7 +24,7 @@ class MagazzinoElement extends StatelessWidget {
         _showModal(context);
       },
       child: GFCard(
-        color: const Color.fromARGB(255, 26, 5, 146),
+        color: Colors.blueAccent,
         borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         title: GFListTile(
           titleText: nome,
