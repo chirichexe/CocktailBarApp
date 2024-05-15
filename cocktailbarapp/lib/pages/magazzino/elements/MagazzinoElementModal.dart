@@ -19,12 +19,9 @@ class MagazzinoElementModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // Impostare la larghezza desiderata
       child: Container(
-        width: MediaQuery.of(context).size.width *
-            0.7, // 70% della larghezza dello schermo
-        height: MediaQuery.of(context).size.height *
-            0.5, // Altezza fissa o percentuale
+        width: MediaQuery.of(context).size.width * 0.7,
+        height: MediaQuery.of(context).size.height * 0.5,
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -33,7 +30,7 @@ class MagazzinoElementModal extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
-                  child: Image.asset('assets/image.png'), // Immagine
+                  child: Image.asset('assets/image.png'),
                 ),
                 const SizedBox(width: 20),
                 Expanded(
@@ -50,19 +47,34 @@ class MagazzinoElementModal extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         descrizione,
-                        //da cambiare
                         style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      DeleteMagazzinoElementButton(
-                          idMagazzino: idMag, idElemento: idEl),
+                      GFButton(
+                        onPressed: () async {
+                          bool? shouldDelete =
+                              await ShouldDeleteDialog.showDeleteDialog(
+                            context,
+                            FirebaseFirestore.instance
+                                .collection('Magazzini')
+                                .doc(idMag)
+                                .collection('Elements')
+                                .doc(idEl),
+                          );
+
+                          if (shouldDelete == true) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        text: 'Delete', // Aggiungi il testo del pulsante
+                      )
                     ],
                   ),
                 ),
               ],
             ),
-            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
+            const Spacer(),
             Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
@@ -75,36 +87,6 @@ class MagazzinoElementModal extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DeleteMagazzinoElementButton extends StatefulWidget {
-  final String idMagazzino;
-  final String idElemento;
-  const DeleteMagazzinoElementButton(
-      {super.key, required this.idMagazzino, required this.idElemento});
-
-  @override
-  State<DeleteMagazzinoElementButton> createState() =>
-      _DeleteMagazzinoElementButtonState();
-}
-
-class _DeleteMagazzinoElementButtonState
-    extends State<DeleteMagazzinoElementButton> {
-  @override
-  Widget build(BuildContext context) {
-    return GFButton(
-      onPressed: () async {
-        await ShouldDeleteDialog.showDeleteDialog(
-          context,
-          FirebaseFirestore.instance
-              .collection('Magazzini')
-              .doc(widget.idMagazzino)
-              .collection('Elements')
-              .doc(widget.idElemento),
-        );
-      },
     );
   }
 }

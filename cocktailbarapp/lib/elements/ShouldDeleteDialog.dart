@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Importa il pacchetto necessario
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShouldDeleteDialog extends StatelessWidget {
-  final DocumentReference
-      documentReference; // Aggiungi il campo per DocumentReference
+  final DocumentReference documentReference;
 
-  ShouldDeleteDialog(
-      {required this.documentReference}); // Aggiungi il costruttore
+  ShouldDeleteDialog({required this.documentReference});
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +15,23 @@ class ShouldDeleteDialog extends StatelessWidget {
         TextButton(
           child: Text('No'),
           onPressed: () {
-            Navigator.of(context)
-                .pop(false); // Chiude il dialog e ritorna false
+            Navigator.of(context).pop(false);
           },
         ),
         TextButton(
           child: Text('Sì'),
           onPressed: () async {
-            await documentReference
-                .delete(); // Chiamata al metodo delete sul DocumentReference
-            Navigator.of(context).pop(true); // Chiude il dialog e ritorna true
+            await documentReference.delete();
+            Navigator.of(context).pop(true);
           },
         ),
       ],
     );
   }
 
-  static Future<void> showDeleteDialog(
-      BuildContext context, DocumentReference documentReference) async {
-    return await showDialog<void>(
+  static Future<bool?> showDeleteDialog(
+      BuildContext context, DocumentReference documentReference) {
+    return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return ShouldDeleteDialog(documentReference: documentReference);
