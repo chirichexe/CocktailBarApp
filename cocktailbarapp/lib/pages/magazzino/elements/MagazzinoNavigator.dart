@@ -94,17 +94,18 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
-                GFIconButton(
-                  padding: const EdgeInsets.all(15.0),
-                  icon: const Icon(Icons.add, color: Colors.white),
-                  onPressed: onPressedButton,
-                  color: Colors.blueAccent,
-                ),
-                SizedBox(width: 10),
+                FloatingActionButton(
+              onPressed: onPressedButton,
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.plus_one),
+              elevation: 4,
+            ),
+                const SizedBox(width: 10),
                 Expanded(
                   flex: 2,
                   child: TextField(
-                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.white70),
+                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.blue[800]),
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: 'Cerca...',
@@ -122,35 +123,75 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             ),
           ),
           Expanded(
-            child: GridView.count(
-              crossAxisCount: MediaQuery.of(context).size.width > 600 ? 5 : 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              padding: const EdgeInsets.all(5.0),
-              children: _filteredElementi.map((element) {
-                return Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: MagazzinoElement(
-                      idMagazzino: element.idMagazzino,
-                      idElemento: element.idElemento,
-                      descrizione: element.descrizione,
-                      nome: element.nome,
-                    ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                int crossAxisCount;
+                if (constraints.maxWidth > 1200) {
+                  crossAxisCount = 5;
+                } else if (constraints.maxWidth > 800) {
+                  crossAxisCount = 4;
+                } else if (constraints.maxWidth > 600) {
+                  crossAxisCount = 3;
+                } else {
+                  crossAxisCount = 2;
+                }
+                return GridView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
+                  itemCount: _filteredElementi.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Column(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: MagazzinoElement(
+                      idMagazzino: _filteredElementi[index].idMagazzino,
+                      idElemento: _filteredElementi[index].idElemento,
+                      descrizione: _filteredElementi[index].descrizione,
+                      nome: _filteredElementi[index].nome,
+                    ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  _filteredElementi[index].descrizione,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 14,
+                                    color: Colors.black54,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
-              }).toList(),
+              },
             ),
           ),
         ],
@@ -158,4 +199,3 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
     );
   }
 }
-

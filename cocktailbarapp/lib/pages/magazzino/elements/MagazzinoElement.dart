@@ -20,7 +20,6 @@ class MagazzinoElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Funzione per aprire il modale
         _showModal(context);
       },
       child: GFCard(

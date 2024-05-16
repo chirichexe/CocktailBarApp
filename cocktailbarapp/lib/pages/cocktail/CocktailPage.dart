@@ -89,11 +89,11 @@ class _CocktailPageState extends State<CocktailPage> {
               child: Icon(Icons.plus_one),
               elevation: 4,
             ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   flex: 2,
                   child: TextField(
-                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.white70),
+                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.blue[800]),
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: 'Cerca...',

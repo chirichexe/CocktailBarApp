@@ -168,6 +168,14 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                           ),
                         ),
                         const SizedBox(height: 10),
+                          const Text('Tipo di ghiaccio: ',
+                          style: TextStyle(
+                          color: Colors.lightBlue,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
                         CustomComboBox(
                           collectionReference:
                               FirebaseFirestore.instance.collection('Ghiacci'),
@@ -177,6 +185,15 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                             });
                           },
                         ),
+                        const SizedBox(width: 30),
+                        const Text('Tipo di bicchiere: ',
+                          style: TextStyle(
+                          color: Colors.lightBlue,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
                         CustomComboBox(
                           collectionReference: FirebaseFirestore.instance
                               .collection('Bicchieri'),

@@ -11,54 +11,97 @@ class CreateIngredientModal extends StatelessWidget {
     required this.updateLists,
   }) : super(key: key);
 
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerQuantita = TextEditingController();
+  final TextEditingController controllerNome = TextEditingController();
+  final TextEditingController controllerQuantita = TextEditingController();
+
+  void onPressedButton() {}
 
   @override
   Widget build(BuildContext context) {
+    double modalWidth = MediaQuery.of(context).size.width * 0.3;
+    double modalHeight = MediaQuery.of(context).size.height * 0.4;
+
     return Dialog(
-      // Larghezza del dialogo al 30% della larghezza dello schermo
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.3,
+        width: modalWidth,
+        height: modalHeight,
         padding: const EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              controller: controllerNome,
-              decoration: const InputDecoration(
-                labelText: 'Nome Ingrediente',
+            Flexible(
+              child: TextField(
+                controller: controllerNome,
+                decoration: InputDecoration(
+                  labelText: 'Nome Ingrediente',
+                  labelStyle: const TextStyle(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 20),
-            TextField(
-              controller: controllerQuantita,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ), // Accetta solo numeri e decimali
-              decoration: const InputDecoration(
-                labelText: 'Quantità (in ml)',
+            Flexible(
+              child: TextField(
+                controller: controllerQuantita,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Quantità (in ml)',
+                  labelStyle: const TextStyle(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            FloatingActionButton(
               onPressed: () {
-                if(!controllerNome.text.isEmpty){
-                String nome = controllerNome.text;
-                double quantitaVal =
-                    double.tryParse(controllerQuantita.text) ?? 0.0;
+                if (controllerNome.text.isNotEmpty) {
+                  String nome = controllerNome.text;
+                  double quantitaVal = double.tryParse(controllerQuantita.text) ?? 0.0;
 
-                ingredients.add(Ingredient(name: nome, qty: quantitaVal));
+                  ingredients.add(Ingredient(name: nome, qty: quantitaVal));
+
+                  // Chiudi il modal e aggiorna le liste nel CreateCocktailModal
+                  Navigator.of(context).pop();
+                  updateLists();
+
+                  // Pulisci i campi di testo
+                  controllerNome.clear();
+                  controllerQuantita.clear();
                 }
-                // Chiudi il modal e aggiorna le liste nel CreateCocktailModal
-                Navigator.of(context).pop();
-                updateLists();
-
-                // Pulisci i campi di testo
-                controllerNome.clear();
-                controllerQuantita.clear();
               },
-              child: Text('Salva'),
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              elevation: 4,
+              child: const Text(
+                'Salva',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

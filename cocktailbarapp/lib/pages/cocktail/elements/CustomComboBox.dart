@@ -30,18 +30,38 @@ class _CustomComboBoxState extends State<CustomComboBox> {
           );
         }).toList();
 
-        return DropdownButton<String>(
-          value: selectedValue,
-          items: items,
-          onChanged: (value) {
-            setState(() {
-              selectedValue = value;
-            });
-            if (widget.onChanged != null) {
-              widget.onChanged!(value);
-            }
-          },
-          hint: Text('Seleziona un tipo di bicchiere'),
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueAccent),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              borderRadius: BorderRadius.circular(10.0),
+              iconEnabledColor: Colors.blueAccent[800],
+              style: const TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
+              value: selectedValue,
+              items: items,
+              onChanged: (value) {
+                setState(() {
+                  selectedValue = value;
+                });
+                if (widget.onChanged != null) {
+                  widget.onChanged!(value);
+                }
+              },
+              hint: const Text(
+                'Seleziona un tipo',
+                style: TextStyle(color: Colors.blueAccent),
+              ),
+              dropdownColor: Colors.white,
+            ),
+          ),
         );
       },
     );

@@ -1,122 +1,131 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
-// ignore: must_be_immutable
 class CreateMagazzinoModal extends StatelessWidget {
+  final TextEditingController controllerNome = TextEditingController();
+  final TextEditingController controllerDescrizione = TextEditingController();
 
   CreateMagazzinoModal({super.key});
-
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerDescrizione = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // Impostare la larghezza desiderata
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: Container(
-        width: MediaQuery.of(context).size.width *
-            0.7, // 70% della larghezza dello schermo
-        height: MediaQuery.of(context).size.height *
-            0.5, // Altezza fissa o percentuale
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height * 0.5,
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Image.asset('assets/image.png'), // Immagine
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Crea un Magazzino",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Crea un Magazzino",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.blue,
+                          ),
                         ),
-                      ),
-                      TextField(
-                        controller: controllerNome,
-                        decoration: const InputDecoration(
-                          labelText: 'Nome Magazzino',
-                          border: OutlineInputBorder(),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: controllerNome,
+                          decoration: InputDecoration(
+                            labelText: 'Nome Magazzino',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                        style: const TextStyle(
-                          fontSize: 16,
+                        const SizedBox(height: 10),
+                        TextField(
+                          controller: controllerDescrizione,
+                          decoration: InputDecoration(
+                            labelText: 'Descrizione Magazzino',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: controllerDescrizione,
-                        decoration: const InputDecoration(
-                          labelText: 'Descizione Magazzino',
-                          border: OutlineInputBorder(),
-                        ),
-                        //da cambiare
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      ElevatedButton(
+                        const SizedBox(height: 20),
+                        ElevatedButton(
                           onPressed: () {
                             try {
-                              FirebaseFirestore.instance.collection('Magazzini')
-                              .add(
-                                {
+                              FirebaseFirestore.instance
+                                  .collection('Magazzini')
+                                  .add({
                                 'name': controllerNome.text,
                                 'description': controllerDescrizione.text,
-                                });
+                              });
                               print('Dati inseriti con successo nel database Firebase.');
                             } catch (error) {
-                              print(
-                              'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                              print('Errore durante l\'inserimento dei dati nel database Firebase: $error');
                             }
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Aggiungi'))
-                    ],
+                          child: const Text('Aggiungi'),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Chiudi'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.blueAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   ),
                 ),
-              ],
-            ),
-            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Chiudi'),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-/*
-  void onPressedButton() async {
-    try {
-      FirebaseFirestore.instance.collection('MagazzinoElement').add({
-        'idMagazzino': idMag,
-        'idElemento': 7,
-        'name': controllerNome.text,
-        'descrizione': controllerDescrizione.text,
-      });
-      print('Dati inseriti con successo nel database Firebase.');
-    } catch (error) {
-      print(
-          'Errore durante l\'inserimento dei dati nel database Firebase: $error');
-    }
-    Navigator.of(context).pop();
-  }
-  */

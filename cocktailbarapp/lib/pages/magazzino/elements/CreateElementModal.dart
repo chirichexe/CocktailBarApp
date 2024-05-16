@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
-// ignore: must_be_immutable
 class CreateElementModal extends StatelessWidget {
   final String idMag;
 
-  CreateElementModal({super.key, required this.idMag});
+  CreateElementModal({Key? key, required this.idMag}) : super(key: key);
 
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerDescrizione = TextEditingController();
@@ -14,112 +12,118 @@ class CreateElementModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      // Impostare la larghezza desiderata
-      child: Container(
-        width: MediaQuery.of(context).size.width *
-            0.7, // 70% della larghezza dello schermo
-        height: MediaQuery.of(context).size.height *
-            0.5, // Altezza fissa o percentuale
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Image.asset('assets/image.png'), // Immagine
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.6, // Larghezza del 80% dello schermo
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Crea un elemento del magazzino",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: Colors.blue,
                 ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Crea un elemento",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      TextField(
-                        controller: controllerNome,
-                        decoration: const InputDecoration(
-                          labelText: 'Nome elemento',
-                          border: OutlineInputBorder(),
-                        ),
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextField(
-                        controller: controllerDescrizione,
-                        decoration: const InputDecoration(
-                          labelText: 'Descizione',
-                          border: OutlineInputBorder(),
-                        ),
-                        //da cambiare
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            try {
-                              FirebaseFirestore.instance.collection('Magazzini')
-                              .doc(idMag)
-                              .collection('Elements')
-                              .add(
-                                {
-                                'name': controllerNome.text,
-                                'description': controllerDescrizione.text,
-                                });
-                              print('Dati inseriti con successo nel database Firebase.');
-                            } catch (error) {
-                              print(
-                              'Errore durante l\'inserimento dei dati nel database Firebase: $error');
-                            }
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Aggiungi'))
-                    ],
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: controllerNome,
+                decoration: InputDecoration(
+                  labelText: 'Nome elemento',
+                  labelStyle: TextStyle(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-              ],
-            ),
-            const Spacer(), // Aggiunge spazio flessibile tra il contenuto e il pulsante
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: controllerDescrizione,
+                decoration: InputDecoration(
+                  labelText: 'Descrizione',
+                  labelStyle: TextStyle(color: Colors.blueAccent),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
                 onPressed: () {
+                  try {
+                    FirebaseFirestore.instance
+                        .collection('Magazzini')
+                        .doc(idMag)
+                        .collection('Elements')
+                        .add({
+                      'name': controllerNome.text,
+                      'description': controllerDescrizione.text,
+                    });
+                    print(
+                        'Dati inseriti con successo nel database Firebase.');
+                  } catch (error) {
+                    print(
+                        'Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                  }
                   Navigator.of(context).pop();
                 },
-                child: const Text('Chiudi'),
+                child: Text('Aggiungi'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10.0,
+                  ),
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Chiudi'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.blueAccent,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 10.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-/*
-  void onPressedButton() async {
-    try {
-      FirebaseFirestore.instance.collection('MagazzinoElement').add({
-        'idMagazzino': idMag,
-        'idElemento': 7,
-        'name': controllerNome.text,
-        'descrizione': controllerDescrizione.text,
-      });
-      print('Dati inseriti con successo nel database Firebase.');
-    } catch (error) {
-      print(
-          'Errore durante l\'inserimento dei dati nel database Firebase: $error');
-    }
-    Navigator.of(context).pop();
-  }
-  */

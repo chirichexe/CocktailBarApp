@@ -9,30 +9,31 @@ class MagazzinoElementModal extends StatelessWidget {
   final String idMag;
   final String idEl;
 
-  const MagazzinoElementModal(
-      {super.key,
-      required this.nome,
-      required this.descrizione,
-      required this.idEl,
-      required this.idMag});
+  const MagazzinoElementModal({
+    super.key,
+    required this.nome,
+    required this.descrizione,
+    required this.idEl,
+    required this.idMag,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
+        width: MediaQuery.of(context).size.width * 0.5,
         height: MediaQuery.of(context).size.height * 0.5,
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: Image.asset('assets/image.png'),
-                ),
-                const SizedBox(width: 20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +42,8 @@ class MagazzinoElementModal extends StatelessWidget {
                         nome,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 24,
+                          color: Colors.blueAccent,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -49,40 +51,48 @@ class MagazzinoElementModal extends StatelessWidget {
                         descrizione,
                         style: const TextStyle(
                           fontSize: 16,
+                          color: Colors.blueGrey,
                         ),
                       ),
-                      GFButton(
-                        onPressed: () async {
-                          bool? shouldDelete =
-                              await ShouldDeleteDialog.showDeleteDialog(
-                            context,
-                            FirebaseFirestore.instance
-                                .collection('Magazzini')
-                                .doc(idMag)
-                                .collection('Elements')
-                                .doc(idEl),
-                          );
-
-                          if (shouldDelete == true) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        text: 'Delete', // Aggiungi il testo del pulsante
-                      )
                     ],
                   ),
                 ),
               ],
             ),
             const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Chiudi'),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GFButton(
+                  onPressed: () async {
+                    bool? shouldDelete =
+                        await ShouldDeleteDialog.showDeleteDialog(
+                      context,
+                      FirebaseFirestore.instance
+                          .collection('Magazzini')
+                          .doc(idMag)
+                          .collection('Elements')
+                          .doc(idEl),
+                    );
+
+                    if (shouldDelete == true) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  text: 'Elimina',
+                  color: Colors.redAccent,
+                  icon: Icon(Icons.delete, color: Colors.white),
+                  shape: GFButtonShape.pills,
+                ),
+                GFButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  text: 'Chiudi',
+                  color: Colors.blue,
+                  shape: GFButtonShape.pills,
+                ),
+              ],
             ),
           ],
         ),
