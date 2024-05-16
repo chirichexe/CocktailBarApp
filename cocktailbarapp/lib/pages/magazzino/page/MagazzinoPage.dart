@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/CreateMagazzinoModal.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/ListaMagazzini.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/Magazzino.dart';
+import 'package:cocktailbarapp/pages/magazzino/page/elements/CreateMagazzinoModal.dart';
+import 'package:cocktailbarapp/pages/magazzino/page/elements/ListaMagazzini.dart';
+import 'package:cocktailbarapp/pages/magazzino/page/elements/Magazzino.dart';
 
 class MagazzinoPage extends StatefulWidget {
   @override

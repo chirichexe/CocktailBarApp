@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cocktailbarapp/global/MyDrawer.dart';
-import 'pages/magazzino/magazzinoPage.dart';
+import 'pages/magazzino/page/MagazzinoPage.dart';
 import 'pages/cocktail/CocktailPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       home: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background.jpg'), // Imposta il percorso dell'immagine di sfondo
+            image: AssetImage(
+                'assets/background.jpg'), // Imposta il percorso dell'immagine di sfondo
             fit: BoxFit.cover,
           ),
         ),

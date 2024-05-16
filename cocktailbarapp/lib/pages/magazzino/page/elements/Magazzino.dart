@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocktailbarapp/elements/ShouldDeleteDialog.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/MagazzinoNavigator.dart';
+import 'package:cocktailbarapp/pages/magazzino/navigator/MagazzinoNavigator.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,16 +51,21 @@ class Magazzino extends StatelessWidget {
                       child: Icon(
                         Icons.warehouse,
                         color: Colors.blueAccent,
-                        size: constraints.maxWidth * 0.15, // Dimensione dell'icona adattata alla larghezza dello schermo
+                        size: constraints.maxWidth *
+                            0.15, // Dimensione dell'icona adattata alla larghezza dello schermo
                       ),
-                      radius: constraints.maxWidth * 0.1, // Dimensione del raggio del cerchio adattata alla larghezza dello schermo
+                      radius: constraints.maxWidth *
+                          0.1, // Dimensione del raggio del cerchio adattata alla larghezza dello schermo
                     ),
-                    SizedBox(height: constraints.maxWidth * 0.05), // Spazio tra l'icona e il testo
+                    SizedBox(
+                        height: constraints.maxWidth *
+                            0.05), // Spazio tra l'icona e il testo
                     Text(
                       nome,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
-                        fontSize: constraints.maxWidth * 0.07, // Dimensione del testo adattata alla larghezza dello schermo
+                        fontSize: constraints.maxWidth *
+                            0.07, // Dimensione del testo adattata alla larghezza dello schermo
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -69,12 +74,15 @@ class Magazzino extends StatelessWidget {
                       descrizione,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
-                        fontSize: constraints.maxWidth * 0.06, // Dimensione del testo adattata alla larghezza dello schermo
+                        fontSize: constraints.maxWidth *
+                            0.06, // Dimensione del testo adattata alla larghezza dello schermo
                         fontWeight: FontWeight.normal,
                         color: Colors.white70,
                       ),
                     ),
-                    SizedBox(height: constraints.maxWidth * 0.05), // Spazio tra il testo e il pulsante
+                    SizedBox(
+                        height: constraints.maxWidth *
+                            0.05), // Spazio tra il testo e il pulsante
                     GFIconButton(
                       onPressed: () async {
                         await ShouldDeleteDialog.showDeleteDialog(
@@ -87,7 +95,8 @@ class Magazzino extends StatelessWidget {
                       icon: Icon(Icons.delete),
                       shape: GFIconButtonShape.circle,
                       color: Colors.redAccent,
-                      iconSize: constraints.maxWidth * 0.08, // Dimensione dell'icona del pulsante adattata alla larghezza dello schermo
+                      iconSize: constraints.maxWidth *
+                          0.08, // Dimensione dell'icona del pulsante adattata alla larghezza dello schermo
                     ),
                   ],
                 ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'Magazzino.dart';
+
 class ListaMagazzini extends StatefulWidget {
   final List<Magazzino> elencoMagazzini;
-  const ListaMagazzini({Key? key, required this.elencoMagazzini}) : super(key: key);
+  const ListaMagazzini({Key? key, required this.elencoMagazzini})
+      : super(key: key);
 
   @override
   State<ListaMagazzini> createState() => _ListaMagazziniState();

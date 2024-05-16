@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/CreateElementModal.dart';
-import 'package:cocktailbarapp/pages/magazzino/elements/MagazzinoElement.dart';
+import 'package:cocktailbarapp/pages/magazzino/navigator/elements/CreateElementModal.dart';
+import 'package:cocktailbarapp/pages/magazzino/navigator/elements/MagazzinoElement.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +9,8 @@ class MagazzinoNavigator extends StatefulWidget {
   final String id;
   final String nome;
 
-  const MagazzinoNavigator({Key? key, required this.id, required this.nome}) : super(key: key);
+  const MagazzinoNavigator({Key? key, required this.id, required this.nome})
+      : super(key: key);
 
   @override
   State<MagazzinoNavigator> createState() => _MagazzinoNavigatorState();
@@ -43,7 +44,9 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
   void filterElements() {
     setState(() {
       _filteredElementi = _elementi
-          .where((element) => element.nome.toLowerCase().contains(_searchController.text.toLowerCase()))
+          .where((element) => element.nome
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
           .toList();
     });
   }
@@ -71,7 +74,7 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
           Map<String, dynamic> data = elementoDoc.data();
           _elementi.add(MagazzinoElement(
             idMagazzino: idMagazzino,
-            idElemento: elementoDoc.id, // ID dell'elemento
+            idElemento: elementoDoc.id,
             nome: data['name'],
             descrizione: data['description'],
           ));
@@ -86,6 +89,7 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Magazzino ${widget.nome}'),
+        foregroundColor: Colors.white,
         backgroundColor: Colors.blueAccent[100],
       ),
       body: Column(
@@ -95,17 +99,18 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
             child: Row(
               children: [
                 FloatingActionButton(
-              onPressed: onPressedButton,
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-              child: Icon(Icons.plus_one),
-              elevation: 4,
-            ),
+                  onPressed: onPressedButton,
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  child: Icon(Icons.plus_one),
+                  elevation: 4,
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   flex: 2,
                   child: TextField(
-                    style: GoogleFonts.roboto(fontSize: 16, color: Colors.blue[800]),
+                    style: GoogleFonts.roboto(
+                        fontSize: 16, color: Colors.blue[800]),
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: 'Cerca...',
@@ -115,7 +120,8 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                     ),
                   ),
                 ),
@@ -156,37 +162,14 @@ class _MagazzinoNavigatorState extends State<MagazzinoNavigator> {
                           ),
                         ],
                       ),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Column(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: MagazzinoElement(
-                      idMagazzino: _filteredElementi[index].idMagazzino,
-                      idElemento: _filteredElementi[index].idElemento,
-                      descrizione: _filteredElementi[index].descrizione,
-                      nome: _filteredElementi[index].nome,
-                    ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  _filteredElementi[index].descrizione,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 14,
-                                    color: Colors.black54,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                      child: AspectRatio(
+                        aspectRatio: 1, // Quadrato
+                        child: MagazzinoElement(
+                          idMagazzino: _filteredElementi[index].idMagazzino,
+                          idElemento: _filteredElementi[index].idElemento,
+                          descrizione: _filteredElementi[index].descrizione,
+                          nome: _filteredElementi[index].nome,
+                        ),
                       ),
                     );
                   },

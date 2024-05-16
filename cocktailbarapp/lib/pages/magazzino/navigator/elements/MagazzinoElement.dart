@@ -1,18 +1,21 @@
-import 'package:cocktailbarapp/pages/cocktail/elements/CocktailElementModal.dart';
+import 'package:cocktailbarapp/pages/magazzino/navigator/elements/MagazzinoElementModal.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/getwidget.dart';
 
-class CocktailElement extends StatefulWidget {
-  final String idElemento;
+class MagazzinoElement extends StatelessWidget {
   final String nome;
+  final String descrizione;
+  final String idMagazzino;
+  final String idElemento;
 
-  const CocktailElement(
-      {super.key, required this.idElemento, required this.nome});
+  const MagazzinoElement({
+    super.key,
+    required this.nome,
+    required this.descrizione,
+    required this.idMagazzino,
+    required this.idElemento,
+  });
 
-  @override
-  State<CocktailElement> createState() => _CocktailElementState();
-}
-
-class _CocktailElementState extends State<CocktailElement> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,17 +35,17 @@ class _CocktailElementState extends State<CocktailElement> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                widget.nome,
+                nome,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 30,
+                  fontSize: 30, // Dimensione del testo aumentata
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Icon(
-                Icons.local_bar,
+                Icons.local_drink,
                 color: Colors.white,
                 size: 30,
               ),
@@ -55,12 +58,14 @@ class _CocktailElementState extends State<CocktailElement> {
 
   void _showModal(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CocktailElementModal(
-          idElemento: widget.idElemento,
-        );
-      },
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return MagazzinoElementModal(
+            nome: nome,
+            descrizione: descrizione,
+            idEl: idElemento,
+            idMag: idMagazzino,
+          );
+        });
   }
 }
