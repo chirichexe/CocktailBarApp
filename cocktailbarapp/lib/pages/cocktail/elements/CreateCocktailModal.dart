@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cocktailbarapp/elements/CheckableElement.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/CreateIngredientModal.dart';
+import 'package:cocktailbarapp/pages/cocktail/elements/CustomComboBox.dart';
 import 'package:cocktailbarapp/pages/cocktail/elements/IngredientItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,12 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
   TextEditingController controllerGarnish = TextEditingController();
   TextEditingController controllerMetodo = TextEditingController();
 
+  String? selectedGlassType;
+  String? selectedIceType;
+
   void _updateLists() {
-    setState(() {}); // Aggiorna lo stato del widget quando le liste vengono modificate
+    setState(
+        () {}); // Aggiorna lo stato del widget quando le liste vengono modificate
   }
 
   _openIngredientModal(BuildContext context) {
@@ -46,6 +51,14 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
     setState(() {
       ingredienti.remove(ingredient);
     });
+  }
+
+  String? getSelectedGlassType() {
+    return selectedGlassType;
+  }
+
+  String? getSelectedIceType() {
+    return selectedIceType;
   }
 
   @override
@@ -155,10 +168,23 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        CheckableElement(
-                          key: _checkableElementKey,
-                          initialValue: false,
-                          elementName: "Ghiaccio",
+                        CustomComboBox(
+                          collectionReference:
+                              FirebaseFirestore.instance.collection('Ghiacci'),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedIceType = value;
+                            });
+                          },
+                        ),
+                        CustomComboBox(
+                          collectionReference: FirebaseFirestore.instance
+                              .collection('Bicchieri'),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedGlassType = value;
+                            });
+                          },
                         ),
                         const SizedBox(height: 10),
                         Wrap(
@@ -178,7 +204,8 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                   border: Border.all(color: Colors.blueAccent),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Icon(Icons.add, color: Colors.blueAccent),
+                                child:
+                                    Icon(Icons.add, color: Colors.blueAccent),
                               ),
                             )
                           ],
@@ -186,14 +213,18 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            List<Ingredient> ingredientsCopy = List.from(ingredienti);
+                            List<Ingredient> ingredientsCopy =
+                                List.from(ingredienti);
                             try {
-                              FirebaseFirestore.instance.collection('Cocktails').add({
+                              FirebaseFirestore.instance
+                                  .collection('Cocktails')
+                                  .add({
                                 'name': controllerNome.text,
                                 'description': controllerDescrizione.text,
                                 'garnish': controllerGarnish.text,
                                 'method': controllerMetodo.text,
-                                'ice': _checkableElementKey.currentState?.getValore() ?? false,
+                                'glass': getSelectedGlassType(),
+                                'ice': getSelectedIceType(),
                               }).then((cocktailDocRef) {
                                 print(ingredienti);
                                 for (var ingrediente in ingredientsCopy) {
@@ -201,28 +232,35 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                                     'name': ingrediente.name,
                                     'quantity': ingrediente.qty
                                   }).then((_) {
-                                    print('Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
+                                    print(
+                                        'Ingrediente aggiunto con successo. Nome Ingrediente ${ingrediente.name}');
                                   }).catchError((error) {
-                                    print('Errore durante l\'aggiunta dell\'ingrediente: $error');
+                                    print(
+                                        'Errore durante l\'aggiunta dell\'ingrediente: $error');
                                   });
                                 }
-                                print('Dati inseriti con successo nel database Firebase.');
+                                print(
+                                    'Dati inseriti con successo nel database Firebase.');
                               }).catchError((error) {
-                                print('Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                                print(
+                                    'Errore durante l\'inserimento dei dati nel database Firebase: $error');
                               });
                             } catch (error) {
-                              print('Errore durante l\'inserimento dei dati nel database Firebase: $error');
+                              print(
+                                  'Errore durante l\'inserimento dei dati nel database Firebase: $error');
                             }
                             ingredienti.clear();
                             Navigator.of(context).pop();
                           },
                           child: const Text('Aggiungi'),
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue, // Text color
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10.0),
                           ),
                         ),
                       ],
@@ -240,7 +278,9 @@ class _CreateCocktailModalState extends State<CreateCocktailModal> {
                   },
                   child: const Text('Chiudi'),
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.blueAccent, padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                    foregroundColor: Colors.blueAccent,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   ),
                 ),
               ),

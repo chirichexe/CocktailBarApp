@@ -61,7 +61,7 @@ class CocktailElementModal extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                  Text(data['name'] ?? 'Nome del cocktail',
+                Text(data['name'] ?? 'Nome del cocktail',
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -70,10 +70,16 @@ class CocktailElementModal extends StatelessWidget {
                 Text('Metodo: ${data['method'] ?? 'Nessun metodo specificato'}',
                     style: const TextStyle(color: Colors.blueGrey)),
                 const SizedBox(height: 10),
-                Text('Garnish: ${data['garnish'] ?? 'Nessun garnish specificato'}',
+                Text(
+                    'Garnish: ${data['garnish'] ?? 'Nessun garnish specificato'}',
                     style: const TextStyle(color: Colors.blueGrey)),
                 const SizedBox(height: 10),
-                Text('Ghiaccio: ${data['ice'] ?? true ? 'Si' : 'No'}',
+                Text(
+                    'Ghiaccio: ${data['ice'] ?? 'Nessun ghiaccio specificato'}',
+                    style: const TextStyle(color: Colors.blueGrey)),
+                const SizedBox(height: 10),
+                Text(
+                    'Bicchiere: ${data['glass'] ?? 'Nessun bicchiere specificato'}',
                     style: const TextStyle(color: Colors.blueGrey)),
                 const SizedBox(height: 20),
                 const Text('Ingredienti',
