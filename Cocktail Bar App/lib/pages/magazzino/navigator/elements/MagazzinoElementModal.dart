@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocktailbarapp/elements/ShouldDeleteDialog.dart';
+import 'package:cocktailbarapp/elements/ShouldDeleteDialogMagazzino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
