@@ -46,16 +46,29 @@ class ShouldDeleteDialog extends StatelessWidget {
   }
 
   static Future<void> _deleteDocumentWithSubcollections(DocumentReference document) async {
-    // Fetch all collections of the document
-    var subcollections = await document.firestore.collectionGroup(document.id).get();
+    // Fetch all subcollections of the document
+    var subcollectionIds = await _getSubcollectionIds(document);
 
-    // Iterate through each collection and delete its documents
-    for (var collection in subcollections.docs) {
-      await _deleteDocumentWithSubcollections(collection.reference);
+    // Iterate through each subcollection and delete its documents
+    for (var subcollectionId in subcollectionIds) {
+      var subcollectionRef = document.collection(subcollectionId);
+      await _deleteAllDocumentsInCollection(subcollectionRef);
     }
 
     // Delete the document itself
     await document.delete();
+  }
+
+  static Future<void> _deleteAllDocumentsInCollection(CollectionReference collection) async {
+    var snapshot = await collection.get();
+    for (var doc in snapshot.docs) {
+      await _deleteDocumentWithSubcollections(doc.reference);
+    }
+  }
+
+  static Future<List<String>> _getSubcollectionIds(DocumentReference document) async {
+    // Fetch all subcollections of the document using a known list of subcollections or another method
+    return ['ingredients']; // Replace with actual subcollection IDs
   }
 
   static Future<bool?> showDeleteDialog(
